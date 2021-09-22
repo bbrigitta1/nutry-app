@@ -29,4 +29,10 @@ public class FoodController {
 
         return "showFoods";
     }
+
+    @GetMapping("/addchoc")
+    public String saveFood() {
+        foodService.save(new Food("chocolate"));
+        return "2addchoc";
+    }
 }

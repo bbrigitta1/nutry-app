@@ -22,4 +22,11 @@ public class FoodService implements IFoodService {
         var foods = (List<Food>) repository.findAll();
         return foods;
     }
+
+    @Override
+    public void save(Food food) {
+        repository.save(new Food("chocolate"));
+    }
+
+
 }
