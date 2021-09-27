@@ -27,7 +27,6 @@ public class ResultController {
         String uri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key="+apiKey+"&query="+searchWord+"&dataType=Survey (FNDDS)";
         RestTemplate rt = new RestTemplate();
         String result = rt.getForObject(uri, String.class);
-        System.out.println(result);
         return result;
     }
 

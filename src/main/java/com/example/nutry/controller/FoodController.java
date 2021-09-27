@@ -5,16 +5,15 @@ import com.example.nutry.service.IFoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-//@CrossOrigin(origins="http://localhost:3000")
+@RestController
+@CrossOrigin(origins="http://localhost:3000")
 public class FoodController {
+
+
 
     @Autowired
     private IFoodService foodService;
@@ -30,9 +29,8 @@ public class FoodController {
         return "showFoods";
     }
 
-    @GetMapping("/addchoc")
-    public String saveFood() {
-        foodService.save(new Food("chocolate"));
-        return "2addchoc";
+    @PostMapping("/addfoodtomealplan")
+    public void saveFood(@RequestBody String food) {
+        System.out.println(food);
     }
 }

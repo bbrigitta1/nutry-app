@@ -12,12 +12,13 @@ public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    //@Column(name="description")
     private String description;
+    private Integer energy;
 
     public Food() {
     }
+
+
 
     public Food(String description) {
         this.description = description;
@@ -26,7 +27,9 @@ public class Food {
     @Override
     public String toString() {
         return "Food{" +
-                "description='" + description + '\'' +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", energy=" + energy +
                 '}';
     }
 }
