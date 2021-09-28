@@ -13,21 +13,21 @@ import java.util.List;
 // We use the repository to retrieve data from the database.
 
 @Service
-public class FoodService implements IFoodService {
+public class AddedFoodService implements IAddedFoodService {
 
     @Autowired
-    private FoodRepository repository;
-
+    private AddedFoodRepository addedFoodRepository;
 
     @Override
-    public List<Food> findAll() {
+    public List<AddedFood> findAll() {
         //TODO check this var modifyer
-        return repository.findAll();
+        return addedFoodRepository.findAll();
     }
 
+
     @Override
-    public void save(Food food) {
-        repository.save(food);
+    public void save(AddedFood addedFood) {
+        addedFoodRepository.save(addedFood);
     }
 
 
