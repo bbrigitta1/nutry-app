@@ -15,7 +15,8 @@ public class Food {
 
     private String description;
     private Integer energy;
-    private Integer amount;
+    private Double protein;
+
 
     public Food() {
     }
@@ -23,7 +24,6 @@ public class Food {
     public Food(String description, Integer energy, Integer amount) {
         this.description = description;
         this.energy = energy;
-        this.amount = amount;
     }
 
     public Food(String description) {
@@ -36,7 +36,6 @@ public class Food {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", energy=" + energy +
-                ", amount=" + amount +
                 '}';
     }
 }
