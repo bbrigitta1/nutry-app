@@ -1,7 +1,6 @@
 package com.example.nutry.config;
 
 import com.example.nutry.repository.AddedFoodRepository;
-import com.example.nutry.repository.FoodRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

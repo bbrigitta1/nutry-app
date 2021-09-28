@@ -1,9 +1,7 @@
 package com.example.nutry.controller;
 
 import com.example.nutry.model.AddedFood;
-import com.example.nutry.model.Food;
 import com.example.nutry.service.AddedFoodService;
-import com.example.nutry.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

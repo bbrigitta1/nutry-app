@@ -1,9 +1,7 @@
 package com.example.nutry.service;
 
 import com.example.nutry.model.AddedFood;
-import com.example.nutry.model.Food;
 import com.example.nutry.repository.AddedFoodRepository;
-import com.example.nutry.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

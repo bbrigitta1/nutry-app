@@ -1,7 +1,6 @@
 package com.example.nutry.service;
 
 import com.example.nutry.model.AddedFood;
-import com.example.nutry.model.Food;
 
 import java.util.List;
 
