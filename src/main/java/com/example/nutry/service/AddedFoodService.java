@@ -1,7 +1,7 @@
 package com.example.nutry.service;
 
-import com.example.nutry.model.Food;
-import com.example.nutry.repository.FoodRepository;
+import com.example.nutry.model.AddedFood;
+import com.example.nutry.repository.AddedFoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +11,21 @@ import java.util.List;
 // We use the repository to retrieve data from the database.
 
 @Service
-public class FoodService implements IFoodService {
+public class AddedFoodService implements IAddedFoodService {
 
     @Autowired
-    private FoodRepository repository;
+    private AddedFoodRepository addedFoodRepository;
 
     @Override
-    public List<Food> findAll() {
+    public List<AddedFood> findAll() {
         //TODO check this var modifyer
-        var foods = (List<Food>) repository.findAll();
-        return foods;
+        return addedFoodRepository.findAll();
     }
 
+
     @Override
-    public Food save(Food food) {
-        return repository.save(food);
+    public void save(AddedFood addedFood) {
+        addedFoodRepository.save(addedFood);
     }
 
 
