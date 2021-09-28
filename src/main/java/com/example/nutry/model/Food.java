@@ -5,6 +5,15 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 import java.math.BigInteger;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "foods")
 public class Food {
@@ -15,13 +24,6 @@ public class Food {
 
     //@Column(name="description")
     private String description;
-
-    public Food() {
-    }
-
-    public Food(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString() {
