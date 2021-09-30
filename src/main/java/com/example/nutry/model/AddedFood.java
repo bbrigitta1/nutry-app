@@ -18,9 +18,15 @@ public class AddedFood {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = true, unique = true)
+    private Long fdcId;
     private String description;
     private Integer energy;
-    private Integer amount;
+
+    @OneToMany(targetEntity = FoodConsumed.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_added_food_id", referencedColumnName = "id")
+    private List<FoodConsumed> foodConsumed;
 
 //    @ElementCollection(fetch = FetchType.LAZY)
 //    @CollectionTable(name="food_nutrients", joinColumns = @JoinColumn(name = "id"))
@@ -39,7 +45,6 @@ public class AddedFood {
         return "AddedFood{" +
                 "description='" + description + '\'' +
                 ", energy=" + energy +
-                ", amount=" + amount +
                 '}';
     }
 }
