@@ -8,6 +8,8 @@ import java.util.List;
 public interface INutrientService {
     List<Nutrient> findAll();
     void save(Nutrient nutrient);
+    Nutrient getByNutrientId2(Long nutrientId);
+
 
 
 }

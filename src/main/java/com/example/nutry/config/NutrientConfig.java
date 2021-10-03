@@ -9,14 +9,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class NutrientConfig {
 
     @Autowired
     NutrientService nutrientService;
     @Bean
-    CommandLineRunner commandLineRunnerAddFood(NutrientRepository nutrientRepository) {
+    CommandLineRunner commandLineRunnerAddNutrient() {
         return args -> {
             Nutrient nutrient1 = Nutrient.builder()
+                    .nutrientId2(1087L)
                     .nutrientName("Calcium, Ca")
                     .unitName("MG")
                     .build();

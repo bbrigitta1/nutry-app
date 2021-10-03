@@ -19,7 +19,8 @@ public class FoodConsumed {
     private Long id;
 
     //TODO
-    private Long userId;
+//    @ManyToOne
+//    private Long userId;
 
     //private Long foodId;
 

@@ -15,11 +15,18 @@ public class FoodNutrient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long foodId;
+    //private Long foodId;
 
-    private Long nutrientId;
+
+    private Long nutrientId2;
 
     private double value;
+
+    @ManyToOne
+    private Food food;
+
+    @ManyToOne
+    private Nutrient nutrient;
 
 
 }

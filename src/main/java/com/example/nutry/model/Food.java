@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 @Entity
 @Table(name = "food")
@@ -24,14 +25,14 @@ public class Food {
     private Integer energy;
 
     //@JoinColumn(name = "fk_food_id", referencedColumnName = "id")
-    @Singular
+    //@Singular
     @OneToMany(mappedBy = "food", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private List<FoodConsumed> foodConsumed;
 
-    @OneToMany(targetEntity = FoodNutrient.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fn_fk", referencedColumnName = "id")
-    private List<FoodNutrient> nutrients;
+    @OneToMany(mappedBy = "food", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    private List<FoodNutrient> foodNutrients;
 
     @Override
     public String toString() {

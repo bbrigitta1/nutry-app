@@ -23,4 +23,11 @@ public class NutrientService implements INutrientService{
     public void save(Nutrient nutrient) {
         nutrientRepository.save(nutrient);
     }
+
+    @Override
+    public Nutrient getByNutrientId2(Long nutrientId) {
+        return nutrientRepository.findByNutrientId2(nutrientId);
+    }
+
+
 }

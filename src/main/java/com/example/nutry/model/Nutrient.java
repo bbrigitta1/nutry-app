@@ -2,10 +2,8 @@ package com.example.nutry.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Data
@@ -20,8 +18,13 @@ public class Nutrient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long nutrientId2;
+
     private String nutrientName;
     private String unitName;
 
+    @OneToMany(mappedBy = "nutrient", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    List<FoodNutrient> foodNutrients;
 
 }
