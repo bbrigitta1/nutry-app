@@ -1,5 +1,6 @@
 package com.example.nutry.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class FoodNutrient {
 
     //private Long foodId;
 
-
+    @JsonProperty(value = "nutrientId")
     private Long nutrientId2;
 
     private double value;
