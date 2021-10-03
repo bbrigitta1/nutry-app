@@ -1,6 +1,6 @@
 package com.example.nutry.repository;
 
-import com.example.nutry.model.AddedFood;
+import com.example.nutry.model.Food;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 // This way we save a lot of boilerplate code.
 
 @Repository
-public interface AddedFoodRepository extends JpaRepository<AddedFood, Long> {
+public interface AddedFoodRepository extends JpaRepository<Food, Long> {
 }

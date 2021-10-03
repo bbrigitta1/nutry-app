@@ -10,4 +10,6 @@ public class Nutry {
         SpringApplication.run(Nutry.class, args);
     }
 
+
+
 }

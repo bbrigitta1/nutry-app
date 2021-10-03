@@ -1,7 +1,6 @@
 package com.example.nutry.controller;
 
-import com.example.nutry.model.AddedFood;
-import com.example.nutry.model.FoodConsumed;
+import com.example.nutry.model.Food;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +21,20 @@ public class AddedFoodController {
 
 
     @GetMapping("/getallfoodsfortheday")
-    public List<AddedFood>  getAllFoodsFromDatabase() {
-        List<AddedFood> addedFoods = addedFoodService.findAll();
-        System.out.println(addedFoods);
-        return addedFoods;
+    public List<Food>  getAllFoodsFromDatabase() {
+        List<Food> foods = addedFoodService.findAll();
+        System.out.println(foods);
+        return foods;
     }
 
     @PostMapping("/addfoodtomealplan")
-    public void saveFood(@RequestBody AddedFood addedFood){
+    public void saveFood(@RequestBody Food food){
 //        Food food = new Food(addedFood.getDescription(), addedFood.getEnergy(), addedFood.getAmount());
-        System.out.println(addedFood);
+        System.out.println(food);
         try {
-            addedFoodService.save(addedFood);
+            addedFoodService.save(food);
         } catch(DataIntegrityViolationException e) {
-            foodConsumedService.save(addedFood.getFoodConsumed().get(0));
+            foodConsumedService.save(food.getFoodConsumed().get(0));
             System.out.println("Entity already exists. Skipping ...");
         }
 

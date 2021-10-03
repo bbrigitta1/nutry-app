@@ -14,8 +14,11 @@ public class FoodNutrient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nutrientName;
-    private String unitName;
+
+    private Long foodId;
+
+    private Long nutrientId;
+
     private double value;
 
 

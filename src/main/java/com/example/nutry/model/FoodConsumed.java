@@ -4,6 +4,7 @@ package com.example.nutry.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,18 @@ public class FoodConsumed {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //TODO
+    private Long userId;
+
+    //private Long foodId;
+
     private int amount;
+
+    private LocalDate consumptionDate;
+
+
+    @ManyToOne
+    private Food food;
 
 
 

@@ -1,6 +1,6 @@
 package com.example.nutry.service;
 
-import com.example.nutry.model.AddedFood;
+import com.example.nutry.model.Food;
 import com.example.nutry.repository.AddedFoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,15 @@ public class AddedFoodService implements IAddedFoodService {
     private AddedFoodRepository addedFoodRepository;
 
     @Override
-    public List<AddedFood> findAll() {
+    public List<Food> findAll() {
         //TODO check this var modifyer
         return addedFoodRepository.findAll();
     }
 
 
     @Override
-    public void save(AddedFood addedFood) {
-        addedFoodRepository.save(addedFood);
+    public void save(Food food) {
+        addedFoodRepository.save(food);
     }
 
 
