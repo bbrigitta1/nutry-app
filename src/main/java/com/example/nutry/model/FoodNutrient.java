@@ -1,5 +1,6 @@
 package com.example.nutry.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -23,11 +24,21 @@ public class FoodNutrient {
 
     private double value;
 
+
     @ManyToOne
     private Food food;
 
     @ManyToOne
     private Nutrient nutrient;
 
-
+    @Override
+    public String toString() {
+        return "FoodNutrient{" +
+                "id=" + id +
+                ", nutrientId2=" + nutrientId2 +
+                ", value=" + value +
+                ", food=" + food.getDescription() +
+//                ", nutrient=" + nutrient.getNutrientName() +
+                '}';
+    }
 }

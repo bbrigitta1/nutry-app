@@ -27,4 +27,14 @@ public class Nutrient {
     @EqualsAndHashCode.Exclude
     List<FoodNutrient> foodNutrients;
 
+    @Override
+    public String toString() {
+        return "Nutrient{" +
+                "id=" + id +
+                ", nutrientId2=" + nutrientId2 +
+                ", nutrientName='" + nutrientName + '\'' +
+                ", unitName='" + unitName + '\'' +
+                ", foodNutrients=" + foodNutrients +
+                '}';
+    }
 }

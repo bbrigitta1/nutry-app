@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,10 +30,23 @@ public class AddedFoodController {
 
 
     @GetMapping("/getallfoodsfortheday")
-    public List<Food>  getAllFoodsFromDatabase() {
-        List<Food> foods = addedFoodService.findAll();
-        System.out.println(foods);
-        return foods;
+    public List<Food> getAllFoodsFromDatabase() {
+
+        List<Food> foodsToDisplay = new ArrayList<>();
+        List<FoodConsumed> consumedFoods = foodConsumedService.findAll();
+        for (FoodConsumed consumedFood: consumedFoods){
+            FoodConsumed foodConsumed = FoodConsumed.builder()
+                    .amount(consumedFood.getAmount()).build();
+            Food food = Food.builder()
+                    .id(consumedFood.getId())
+                    .description(consumedFood.getFood().getDescription())
+                    .energy(consumedFood.getFood().getEnergy())
+                    .foodConsumed(Lists.newArrayList(foodConsumed))
+                    .build();
+            foodsToDisplay.add(food);
+        }
+        System.out.println(foodsToDisplay);
+        return foodsToDisplay;
     }
 
     @PostMapping("/addfoodtomealplan")
@@ -53,15 +67,14 @@ public class AddedFoodController {
 
         foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setFood(foodNew)));
         foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setNutrient(nutrientService.getByNutrientId2(foodNutrient1.getNutrientId2()))));
-                //foodNutrient1.setNutrient(nutrientService.findAll().stream().allMatch())));
 
-        System.out.println(food);
-        try {
-            addedFoodService.save(foodNew);
-        } catch(DataIntegrityViolationException e) {
-            foodConsumedService.save(food.getFoodConsumed().get(0));
-            System.out.println("Entity already exists. Skipping ...");
-        }
+        addedFoodService.save(foodNew);
+//        try {
+//            addedFoodService.save(foodNew);
+//        } catch(DataIntegrityViolationException e) {
+//            foodConsumedService.save(food.getFoodConsumed().get(0));
+//            System.out.println("Entity already exists. Skipping ...");
+//        }
 
 
     }

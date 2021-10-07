@@ -18,7 +18,6 @@ public class AddedFoodService implements IAddedFoodService {
 
     @Override
     public List<Food> findAll() {
-        //TODO check this var modifyer
         return addedFoodRepository.findAll();
     }
 
