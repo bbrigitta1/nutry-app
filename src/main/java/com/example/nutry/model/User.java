@@ -1,5 +1,7 @@
 package com.example.nutry.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 //username: "",
@@ -10,7 +12,11 @@ import javax.persistence.*;
 //    activity: "",
 //    goal: "",
 //    recommended: "",
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Entity
 @Table(name = "users")
 public class User {
@@ -43,6 +49,4 @@ public class User {
     @Column(name="recommended")
     private int recommended;
 
-    public User() {
-    }
 }
