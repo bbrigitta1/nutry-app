@@ -1,14 +1,13 @@
 package com.example.nutry.controller;
 
-import com.example.nutry.model.Food;
-import com.example.nutry.model.FoodConsumed;
-import com.example.nutry.model.FoodNutrient;
-import com.example.nutry.model.User;
+import com.example.nutry.model.*;
 import com.example.nutry.repository.UserRepository;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import com.example.nutry.service.NutrientService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.assertj.core.util.Lists;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +45,7 @@ public class AddedFoodController {
         List<FoodConsumed> consumedFoods = foodConsumedService.findByUser(exampleUser);
         for (FoodConsumed consumedFood: consumedFoods){
             FoodConsumed foodConsumed = FoodConsumed.builder()
+                    .id(consumedFood.getId())
                     .amount(consumedFood.getAmount()).build();
             Food food = Food.builder()
                     .id(consumedFood.getId())
@@ -55,7 +55,6 @@ public class AddedFoodController {
                     .build();
             foodsToDisplay.add(food);
         }
-        System.out.println(foodsToDisplay);
         return foodsToDisplay;
     }
 
@@ -94,5 +93,12 @@ public class AddedFoodController {
 
 
     }
+
+    @PostMapping("/changeamountoffood")
+    public void changeAmountOfFood(@RequestBody AmountChangeHelper amountChangeHelper){
+        Long consumedFoodId = amountChangeHelper.getId();
+        foodConsumedService.changeFoodAmount(consumedFoodId, 25);
+    }
+
 
 }

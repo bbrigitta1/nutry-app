@@ -15,4 +15,5 @@ public interface FoodConsumedRepository extends JpaRepository<FoodConsumed, Long
     List<FoodConsumed> findByUser(User user);
 
 
+
 }

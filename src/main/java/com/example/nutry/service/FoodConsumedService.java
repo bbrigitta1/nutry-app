@@ -28,4 +28,11 @@ public class FoodConsumedService implements IFoodConsumedService{
         return foodConsumedRepository.findByUser(user);
     }
 
+    public void changeFoodAmount(Long consumedFoodId, Integer amount){
+        FoodConsumed foodConsumed = foodConsumedRepository.getById(consumedFoodId);
+        Integer newAmount = foodConsumed.getAmount() + amount;
+        foodConsumed.setAmount(newAmount);
+        foodConsumedRepository.save(foodConsumed);
+
+    }
 }
