@@ -19,9 +19,8 @@ public class FoodConsumed {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //TODO
-//    @ManyToOne
-//    private Long userId;
+    @ManyToOne
+    private User user;
 
     //private Long foodId;
 

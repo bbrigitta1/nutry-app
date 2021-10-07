@@ -3,6 +3,8 @@ package com.example.nutry.controller;
 import com.example.nutry.model.Food;
 import com.example.nutry.model.FoodConsumed;
 import com.example.nutry.model.FoodNutrient;
+import com.example.nutry.model.User;
+import com.example.nutry.repository.UserRepository;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import com.example.nutry.service.NutrientService;
@@ -19,6 +21,8 @@ import java.util.List;
 @CrossOrigin(origins="http://localhost:3000")
 public class AddedFoodController {
 
+
+
     @Autowired
     private AddedFoodService addedFoodService;
 
@@ -28,12 +32,18 @@ public class AddedFoodController {
     @Autowired
     NutrientService  nutrientService;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @GetMapping("/getallfoodsfortheday")
-    public List<Food> getAllFoodsFromDatabase() {
+    public List<Food> getAllFoodsForTheDay() {
+
+        //TODO get user ID from session
+        User exampleUser = userRepository.findAll().get(0);
 
         List<Food> foodsToDisplay = new ArrayList<>();
-        List<FoodConsumed> consumedFoods = foodConsumedService.findAll();
+        List<FoodConsumed> consumedFoods = foodConsumedService.findByUser(exampleUser);
         for (FoodConsumed consumedFood: consumedFoods){
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .amount(consumedFood.getAmount()).build();
@@ -51,10 +61,16 @@ public class AddedFoodController {
 
     @PostMapping("/addfoodtomealplan")
     public void saveFood(@RequestBody Food food){
+
+        //TODO get user ID from session
+        User exampleUser = userRepository.findAll().get(0);
+
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)
                 .consumptionDate(LocalDate.of(2021,9,1))
+                .user(exampleUser)
                 .build();
+        exampleUser.setFoodConsumeds(Lists.newArrayList(foodConsumed));
 
         Food foodNew = Food.builder()
                 .description(food.getDescription())

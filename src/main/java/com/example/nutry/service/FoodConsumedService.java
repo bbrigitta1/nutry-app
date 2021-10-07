@@ -1,6 +1,7 @@
 package com.example.nutry.service;
 
 import com.example.nutry.model.FoodConsumed;
+import com.example.nutry.model.User;
 import com.example.nutry.repository.FoodConsumedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Service
 public class FoodConsumedService implements IFoodConsumedService{
+
     @Autowired
     private FoodConsumedRepository foodConsumedRepository;
 
@@ -21,4 +23,9 @@ public class FoodConsumedService implements IFoodConsumedService{
     public List<FoodConsumed> findAll() {
         return foodConsumedRepository.findAll();
     }
+
+    public List<FoodConsumed> findByUser (User user){
+        return foodConsumedRepository.findByUser(user);
+    }
+
 }
