@@ -38,7 +38,6 @@ public class AddedFoodController {
 
         //TODO get user ID from session
         User exampleUser = userRepository.findAll().get(0);
-//        List<Food> foodsToDisplay = addedFoodService.findAll();
         List<Food> foodsToDisplay = new ArrayList<>();
         List<FoodConsumed> consumedFoodsByUser = foodConsumedService.findByUser(exampleUser);
         for (FoodConsumed consumedFoodByUser: consumedFoodsByUser){
@@ -46,13 +45,13 @@ public class AddedFoodController {
                     .id(consumedFoodByUser.getId())
                     .amount(consumedFoodByUser.getAmount()).build();
             Food food = Food.builder()
-//                    .id(consumedFoodByUser.getId())
                     .description(consumedFoodByUser.getFood().getDescription())
                     .energy(consumedFoodByUser.getFood().getEnergy())
                     .foodConsumed(Lists.newArrayList(foodConsumed))
                     .build();
             foodsToDisplay.add(food);
         }
+        System.out.println(foodsToDisplay);
         return foodsToDisplay;
     }
 
@@ -93,13 +92,19 @@ public class AddedFoodController {
     }
 
     @PostMapping("/changeamountoffood")
-    public void changeAmountOfFood(@RequestBody AmountChangeDTO amountChangeDTO){
-        Long consumedFoodId = amountChangeDTO.getId();
-        String direction = amountChangeDTO.getDirection();
-        Integer amount = Objects.equals(direction, "+")
-                ? 25
-                : -25;
+    public void changeAmountOfFood(@RequestBody AmountChangeDTO amountChangeDTO) {
+        Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
+        String action = amountChangeDTO.getAction();
+        Integer amount = Objects.equals(action, "+")
+                    ? 25
+                    : -25;
         foodConsumedService.changeFoodAmount(consumedFoodId, amount);
+    }
+
+    @PostMapping("/deletefood")
+    public void deleteFood(@RequestBody AmountChangeDTO amountChangeDTO){
+        Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
+        foodConsumedService.deleteFood(consumedFoodId);
     }
 
 

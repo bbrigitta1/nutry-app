@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @ToString
 public class AmountChangeDTO {
 
-    private Long id;
-    private String direction;
+    private Long consumedFoodId;
+    private String action;
 
 
 }

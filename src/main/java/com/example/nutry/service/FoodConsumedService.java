@@ -35,4 +35,10 @@ public class FoodConsumedService implements IFoodConsumedService{
         foodConsumedRepository.save(foodConsumed);
 
     }
+
+    public void deleteFood (Long consumedFoodId){
+        foodConsumedRepository.deleteById(consumedFoodId);
+    }
+
+
 }
