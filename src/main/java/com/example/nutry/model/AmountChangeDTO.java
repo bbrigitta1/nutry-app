@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @Builder
 @ToString
-public class AmountChangeHelper {
+public class AmountChangeDTO {
 
     private Long id;
     private String direction;

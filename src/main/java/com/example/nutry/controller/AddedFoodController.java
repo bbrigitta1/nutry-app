@@ -5,16 +5,14 @@ import com.example.nutry.repository.UserRepository;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import com.example.nutry.service.NutrientService;
-import org.apache.tomcat.util.json.JSONParser;
 import org.assertj.core.util.Lists;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -40,17 +38,17 @@ public class AddedFoodController {
 
         //TODO get user ID from session
         User exampleUser = userRepository.findAll().get(0);
-
+//        List<Food> foodsToDisplay = addedFoodService.findAll();
         List<Food> foodsToDisplay = new ArrayList<>();
-        List<FoodConsumed> consumedFoods = foodConsumedService.findByUser(exampleUser);
-        for (FoodConsumed consumedFood: consumedFoods){
+        List<FoodConsumed> consumedFoodsByUser = foodConsumedService.findByUser(exampleUser);
+        for (FoodConsumed consumedFoodByUser: consumedFoodsByUser){
             FoodConsumed foodConsumed = FoodConsumed.builder()
-                    .id(consumedFood.getId())
-                    .amount(consumedFood.getAmount()).build();
+                    .id(consumedFoodByUser.getId())
+                    .amount(consumedFoodByUser.getAmount()).build();
             Food food = Food.builder()
-                    .id(consumedFood.getId())
-                    .description(consumedFood.getFood().getDescription())
-                    .energy(consumedFood.getFood().getEnergy())
+//                    .id(consumedFoodByUser.getId())
+                    .description(consumedFoodByUser.getFood().getDescription())
+                    .energy(consumedFoodByUser.getFood().getEnergy())
                     .foodConsumed(Lists.newArrayList(foodConsumed))
                     .build();
             foodsToDisplay.add(food);
@@ -95,9 +93,13 @@ public class AddedFoodController {
     }
 
     @PostMapping("/changeamountoffood")
-    public void changeAmountOfFood(@RequestBody AmountChangeHelper amountChangeHelper){
-        Long consumedFoodId = amountChangeHelper.getId();
-        foodConsumedService.changeFoodAmount(consumedFoodId, 25);
+    public void changeAmountOfFood(@RequestBody AmountChangeDTO amountChangeDTO){
+        Long consumedFoodId = amountChangeDTO.getId();
+        String direction = amountChangeDTO.getDirection();
+        Integer amount = Objects.equals(direction, "+")
+                ? 25
+                : -25;
+        foodConsumedService.changeFoodAmount(consumedFoodId, amount);
     }
 
 
