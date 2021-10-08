@@ -12,7 +12,7 @@ import java.util.List;
 public interface FoodConsumedRepository extends JpaRepository<FoodConsumed, Long> {
 
     @Transactional
-    List<FoodConsumed> findByUser(User user);
+    List<FoodConsumed> findByUserOrderById(User user);
 
 
 

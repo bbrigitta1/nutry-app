@@ -12,7 +12,8 @@ import javax.persistence.Entity;
 public class AmountChangeDTO {
 
     private Long consumedFoodId;
-    private String action;
+    private String direction;
+    private Integer amount;
 
 
 }

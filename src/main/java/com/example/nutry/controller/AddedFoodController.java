@@ -94,8 +94,8 @@ public class AddedFoodController {
     @PostMapping("/changeamountoffood")
     public void changeAmountOfFood(@RequestBody AmountChangeDTO amountChangeDTO) {
         Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
-        String action = amountChangeDTO.getAction();
-        Integer amount = Objects.equals(action, "+")
+        String direction = amountChangeDTO.getDirection();
+        Integer amount = Objects.equals(direction, "+")
                     ? 25
                     : -25;
         foodConsumedService.changeFoodAmount(consumedFoodId, amount);
@@ -105,6 +105,12 @@ public class AddedFoodController {
     public void deleteFood(@RequestBody AmountChangeDTO amountChangeDTO){
         Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
         foodConsumedService.deleteFood(consumedFoodId);
+    }
+
+    @PostMapping("/changeamountoffoodtocustomvalue")
+    public void changeAmountOfFoodByCustomValue(@RequestBody AmountChangeDTO amountChangeDTO){
+        Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
+        foodConsumedService.changeFoodAmountByCustomValue(consumedFoodId,amountChangeDTO.getAmount());
     }
 
 

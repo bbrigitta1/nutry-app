@@ -25,7 +25,7 @@ public class FoodConsumedService implements IFoodConsumedService{
     }
 
     public List<FoodConsumed> findByUser (User user){
-        return foodConsumedRepository.findByUser(user);
+        return foodConsumedRepository.findByUserOrderById(user);
     }
 
     public void changeFoodAmount(Long consumedFoodId, Integer amount){
@@ -35,6 +35,14 @@ public class FoodConsumedService implements IFoodConsumedService{
         foodConsumedRepository.save(foodConsumed);
 
     }
+
+    public void changeFoodAmountByCustomValue(Long consumedFoodId, Integer amount){
+        FoodConsumed foodConsumed = foodConsumedRepository.getById(consumedFoodId);
+        foodConsumed.setAmount(amount);
+        foodConsumedRepository.save(foodConsumed);
+    }
+
+
 
     public void deleteFood (Long consumedFoodId){
         foodConsumedRepository.deleteById(consumedFoodId);
