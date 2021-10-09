@@ -1,12 +1,16 @@
 package com.example.nutry.controller;
 
-import com.example.nutry.model.MacroNutrientsDTO;
+import com.example.nutry.model.*;
 import com.example.nutry.service.DashBoardService;
+import com.example.nutry.service.FoodConsumedService;
+import com.example.nutry.service.IFoodConsumedService;
+import com.example.nutry.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,13 +21,32 @@ public class DashBoardController {
 
     //DTO -> MacroNutrents.class
 
+    @Autowired
+    private FoodConsumedService foodConsumedService;
 
 
     @Autowired
     private DashBoardService dashBoardService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/getMacroNutrients")
     private MacroNutrientsDTO getMacroNutrients() {
+
+        User user = userService.findById(1L);
+        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, LocalDate.of(2021,9,1));
+        Double sumOfProteins = 0.0;
+        for (FoodConsumed foodConsumedByUser: foodsConsumedByUser){
+            for (FoodNutrient foodNutrient: foodConsumedByUser.getFood().getFoodNutrients()){
+                if (foodNutrient.getNutrientId2().equals(1003L)){
+                    sumOfProteins += foodNutrient.getValue() * 100 / foodConsumedByUser.getAmount();
+                }
+            }
+        }
+
+        System.out.println(sumOfProteins);
+
         MacroNutrientsDTO mn = MacroNutrientsDTO.builder()
                 .protein(20)
                 .fat(50)

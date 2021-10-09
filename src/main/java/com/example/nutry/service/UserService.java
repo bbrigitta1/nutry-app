@@ -16,4 +16,9 @@ public class UserService implements IUserService{
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public User findById(Long userId) {
+        return userRepository.findUserById(userId);
+    }
+
 }
