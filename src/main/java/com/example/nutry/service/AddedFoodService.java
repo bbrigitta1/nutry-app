@@ -27,5 +27,9 @@ public class AddedFoodService implements IAddedFoodService {
         addedFoodRepository.save(food);
     }
 
+    public Food findByFcdId(Long fdcId) {
+        return addedFoodRepository.findByFdcId(fdcId);
+    }
+
 
 }

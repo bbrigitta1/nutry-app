@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AddedFoodRepository extends JpaRepository<Food, Long> {
+
+    Food findByFdcId(Long fdcId);
 }

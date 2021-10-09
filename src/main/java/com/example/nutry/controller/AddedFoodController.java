@@ -60,36 +60,33 @@ public class AddedFoodController {
 
         //TODO get user ID from session
         User exampleUser = userRepository.findAll().get(0);
-
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)
-                .consumptionDate(LocalDate.of(2021,9,1))
+                .consumptionDate(LocalDate.of(2021, 9, 1))
                 .user(exampleUser)
                 .build();
         exampleUser.setFoodConsumeds(Lists.newArrayList(foodConsumed));
 
-        Food foodNew = Food.builder()
-                .description(food.getDescription())
-                .fdcId(food.getFdcId())
-                .energy(food.getEnergy())
-                .foodNutrients(food.getFoodNutrients())
-                .foodConsumed(Lists.newArrayList(foodConsumed))
-                .build();
-        foodConsumed.setFood(foodNew);
+        if (addedFoodService.findByFcdId(food.getFdcId()) == null) {
+            Food foodNew = Food.builder()
+                    .description(food.getDescription())
+                    .fdcId(food.getFdcId())
+                    .energy(food.getEnergy())
+                    .foodNutrients(food.getFoodNutrients())
+                    .foodConsumed(Lists.newArrayList(foodConsumed))
+                    .build();
+            foodConsumed.setFood(foodNew);
 
-        foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setFood(foodNew)));
-        foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setNutrient(nutrientService.getByNutrientId2(foodNutrient1.getNutrientId2()))));
+            foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setFood(foodNew)));
+            foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setNutrient(nutrientService.getByNutrientId2(foodNutrient1.getNutrientId2()))));
 
-        addedFoodService.save(foodNew);
-//        try {
-//            addedFoodService.save(foodNew);
-//        } catch(DataIntegrityViolationException e) {
-//            foodConsumedService.save(food.getFoodConsumed().get(0));
-//            System.out.println("Entity already exists. Skipping ...");
-//        }
-
-
-    }
+            addedFoodService.save(foodNew);
+        } else {
+            Food foodAlreadyInDatabase = addedFoodService.findByFcdId(food.getFdcId());
+            foodConsumed.setFood(foodAlreadyInDatabase);
+            foodConsumedService.save(foodConsumed);
+            }
+        }
 
     @PostMapping("/changeamountoffood")
     public void changeAmountOfFood(@RequestBody AmountChangeDTO amountChangeDTO) {
