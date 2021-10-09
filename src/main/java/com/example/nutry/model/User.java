@@ -3,6 +3,7 @@ package com.example.nutry.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 //username: "",
 //    age: "",
@@ -27,6 +28,10 @@ public class User {
 
     @Column(name="username")
     private String userName;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    private List<FoodConsumed> foodConsumeds;
 
     @Column(name="age")
     private int age;

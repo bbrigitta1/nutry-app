@@ -1,5 +1,7 @@
 package com.example.nutry.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,21 +26,26 @@ public class Food {
     private String description;
     private Integer energy;
 
-    //@JoinColumn(name = "fk_food_id", referencedColumnName = "id")
-    //@Singular
+
     @OneToMany(mappedBy = "food", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private List<FoodConsumed> foodConsumed;
+
 
     @OneToMany(mappedBy = "food", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private List<FoodNutrient> foodNutrients;
 
+
     @Override
     public String toString() {
-        return "AddedFood{" +
-                "description='" + description + '\'' +
+        return "Food{" +
+                "id=" + id +
+                ", fdcId=" + fdcId +
+                ", description='" + description + '\'' +
                 ", energy=" + energy +
+                ", foodConsumed=" + foodConsumed +
+                ", foodNutrients=" + foodNutrients +
                 '}';
     }
 }

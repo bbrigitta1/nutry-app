@@ -1,6 +1,7 @@
 package com.example.nutry.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,9 +19,8 @@ public class FoodConsumed {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //TODO
-//    @ManyToOne
-//    private Long userId;
+    @ManyToOne
+    private User user;
 
     //private Long foodId;
 
@@ -32,7 +32,13 @@ public class FoodConsumed {
     @ManyToOne
     private Food food;
 
-
-
-
+    @Override
+    public String toString() {
+        return "FoodConsumed{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", consumptionDate=" + consumptionDate +
+                //", food=" + food.getDescription() +
+                '}';
+    }
 }

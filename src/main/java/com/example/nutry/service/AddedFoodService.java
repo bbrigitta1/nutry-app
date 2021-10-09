@@ -18,7 +18,6 @@ public class AddedFoodService implements IAddedFoodService {
 
     @Override
     public List<Food> findAll() {
-        //TODO check this var modifyer
         return addedFoodRepository.findAll();
     }
 
@@ -26,6 +25,10 @@ public class AddedFoodService implements IAddedFoodService {
     @Override
     public void save(Food food) {
         addedFoodRepository.save(food);
+    }
+
+    public Food findByFcdId(Long fdcId) {
+        return addedFoodRepository.findByFdcId(fdcId);
     }
 
 
