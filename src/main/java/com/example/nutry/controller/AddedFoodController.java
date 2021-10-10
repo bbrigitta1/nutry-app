@@ -21,7 +21,6 @@ import java.util.Objects;
 public class AddedFoodController {
 
 
-
     @Autowired
     private AddedFoodService addedFoodService;
 
