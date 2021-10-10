@@ -60,6 +60,7 @@ public class AddedFoodController {
         mealPlan.setFoods(foodsToDisplay);
         mealPlan.setMacroNutrients(getMacroNutrients());
         System.out.println("mealplan " + mealPlan);
+        System.out.println("update");
         return mealPlan;
     }
 

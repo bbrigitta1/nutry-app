@@ -26,11 +26,11 @@ public class UserDetails {
 
     private int height;
 
-    private String gender;
+    private Double gender;
 
-    private String activity;
+    private Double activity;
 
-    private String goal;
+    private Double goal;
 
     private LocalDate date;
 

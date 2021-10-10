@@ -56,12 +56,20 @@ public class NutrientConfig {
                     .unitName("MG")
                     .build();
 
-
-
             User user = User.builder()
                     .id(1L)
                     .userName("Example User")
                     .build();
+
+            UserDetails userDetails = UserDetails.builder()
+                    .height(180)
+                    .weight(80)
+                    .activity(1.1)
+                    .gender(0.0)
+                    .age(30)
+                    .goal(1.0)
+                    .build();
+
             userRepository.save(user);
 
             nutrientService.save(nutrient1);
@@ -71,6 +79,11 @@ public class NutrientConfig {
 
 
             User exampleUser = userRepository.findAll().get(0);
+            userDetails.setUser(exampleUser);
+
+            exampleUser.setUserDetails(Lists.newArrayList(userDetails));
+
+            userRepository.save(exampleUser);
 
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .amount(100)
