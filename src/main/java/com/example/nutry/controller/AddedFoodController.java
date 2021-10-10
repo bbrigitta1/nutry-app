@@ -5,12 +5,14 @@ import com.example.nutry.repository.UserRepository;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import com.example.nutry.service.NutrientService;
+import com.example.nutry.service.UserService;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,9 +34,12 @@ public class AddedFoodController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
 
-    @GetMapping("/getallfoodsfortheday")
-    public List<Food> getAllFoodsForTheDay() {
+
+    @GetMapping("/updatemealplan")
+    public MealPlanDTO getAllFoodsForTheDay() {
 
         //TODO get user ID from session
         User exampleUser = userRepository.findAll().get(0);
@@ -51,8 +56,12 @@ public class AddedFoodController {
                     .build();
             foodsToDisplay.add(food);
         }
-        System.out.println(foodsToDisplay);
-        return foodsToDisplay;
+
+        MealPlanDTO mealPlan= new MealPlanDTO();
+        mealPlan.setFoods(foodsToDisplay);
+        mealPlan.setMacroNutrients(getMacroNutrients());
+        System.out.println("mealplan " + mealPlan);
+        return mealPlan;
     }
 
     @PostMapping("/addfoodtomealplan")
@@ -109,6 +118,38 @@ public class AddedFoodController {
         Long consumedFoodId = amountChangeDTO.getConsumedFoodId();
         foodConsumedService.changeFoodAmountByCustomValue(consumedFoodId,amountChangeDTO.getAmount());
     }
+
+    private MacroNutrientsDTO getMacroNutrients() {
+        HashMap<String, Integer> nutrients = new HashMap<>();
+        User user = userService.findById(1L);
+        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, LocalDate.of(2021, 9, 1));
+        Double sumOfProteins = 0.0;
+        Double sumOfFat = 0.0;
+        Double sumOfCarbohydrate = 0.0;
+        for (FoodConsumed foodConsumedByUser : foodsConsumedByUser) {
+            for (FoodNutrient foodNutrient : foodConsumedByUser.getFood().getFoodNutrients()) {
+                if (foodNutrient.getNutrientId2().equals(1003L)) {
+                    sumOfProteins += foodNutrient.getValue() * foodConsumedByUser.getAmount() / 100;
+                }
+                if (foodNutrient.getNutrientId2().equals(1004L)) {
+                    sumOfFat += foodNutrient.getValue() * foodConsumedByUser.getAmount() / 100 ;
+                }
+                if (foodNutrient.getNutrientId2().equals(1005L)) {
+                    sumOfCarbohydrate += foodNutrient.getValue() * foodConsumedByUser.getAmount() / 100;
+                }
+            }
+        }
+
+        System.out.println(sumOfProteins);
+
+        MacroNutrientsDTO mn = MacroNutrientsDTO.builder()
+                .protein(sumOfProteins)
+                .fat(sumOfFat)
+                .carbohydrate(sumOfCarbohydrate)
+                .build();
+        return mn;
+    }
+
 
 
 }

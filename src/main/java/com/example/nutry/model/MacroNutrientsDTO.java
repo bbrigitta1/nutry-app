@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 public class MacroNutrientsDTO {
 
-    private Integer protein;
-    private Integer fat;
-    private Integer carbohydrate;
+    private Double protein;
+    private Double fat;
+    private Double carbohydrate;
 }

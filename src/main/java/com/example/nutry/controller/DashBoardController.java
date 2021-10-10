@@ -31,32 +31,41 @@ public class DashBoardController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getMacroNutrients")
-    private MacroNutrientsDTO getMacroNutrients() {
-
-        User user = userService.findById(1L);
-        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, LocalDate.of(2021,9,1));
-        Double sumOfProteins = 0.0;
-        for (FoodConsumed foodConsumedByUser: foodsConsumedByUser){
-            for (FoodNutrient foodNutrient: foodConsumedByUser.getFood().getFoodNutrients()){
-                if (foodNutrient.getNutrientId2().equals(1003L)){
-                    sumOfProteins += foodNutrient.getValue() * 100 / foodConsumedByUser.getAmount();
-                }
-            }
-        }
-
-        System.out.println(sumOfProteins);
-
-        MacroNutrientsDTO mn = MacroNutrientsDTO.builder()
-                .protein(20)
-                .fat(50)
-                .carbohydrate(90)
-                .build();
-        return mn;
-//        HashMap<String, Integer> map = new HashMap<>();
-//        map.put("1003", 90);
-//        map.put("1004", 10);
-//        map.put("1005", 50);
-//        return map;
-    }
+//    @GetMapping("/getMacroNutrients")
+////    private MacroNutrientsDTO getMacroNutrients() {
+////        HashMap<String, Integer> nutrients = new HashMap<>();
+////        User user = userService.findById(1L);
+////        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, LocalDate.of(2021,9,1));
+////        Double sumOfProteins = 0.0;
+////        Double sumOfFat = 0.0;
+////        Double sumOfCarbohydrate = 0.0;
+////        for (FoodConsumed foodConsumedByUser: foodsConsumedByUser){
+////            for (FoodNutrient foodNutrient: foodConsumedByUser.getFood().getFoodNutrients()){
+////                if (foodNutrient.getNutrientId2().equals(1003L)){
+////                    sumOfProteins += foodNutrient.getValue() * 100 / foodConsumedByUser.getAmount();
+////                }
+////                if (foodNutrient.getNutrientId2().equals(1004L)){
+////                    sumOfFat += foodNutrient.getValue() * 100 / foodConsumedByUser.getAmount();
+////                }
+////                if (foodNutrient.getNutrientId2().equals(1005L)){
+////                    sumOfCarbohydrate += foodNutrient.getValue() * 100 / foodConsumedByUser.getAmount();
+////                }
+////            }
+////        }
+////
+////        System.out.println(sumOfProteins);
+////
+////        MacroNutrientsDTO mn = MacroNutrientsDTO.builder()
+////                .protein(sumOfProteins)
+////                .fat(sumOfFat)
+////                .carbohydrate(sumOfCarbohydrate)
+////                .build();
+////        return mn;
+////        HashMap<String, Integer> map = new HashMap<>();
+////        map.put("1003", 90);
+////        map.put("1004", 10);
+////        map.put("1005", 50);
+////        return map;
+//    return null;
+//    }
 }
