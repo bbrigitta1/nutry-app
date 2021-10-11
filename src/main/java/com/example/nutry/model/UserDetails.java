@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@ToString
+@ToString
 @Entity
 @Table(name = "userdetails")
 public class UserDetails {
@@ -26,11 +26,11 @@ public class UserDetails {
 
     private int height;
 
-    private Double gender;
+    private double gender;
 
-    private Double activity;
+    private double activity;
 
-    private Double goal;
+    private double goal;
 
     private LocalDate date;
 

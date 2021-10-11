@@ -57,7 +57,6 @@ public class NutrientConfig {
                     .build();
 
             User user = User.builder()
-                    .id(1L)
                     .userName("Example User")
                     .build();
 
@@ -67,8 +66,12 @@ public class NutrientConfig {
                     .activity(1.1)
                     .gender(0.0)
                     .age(30)
+                    .user(user)
                     .goal(1.0)
+                    .date(LocalDate.now())
                     .build();
+
+            user.setUserDetails(Lists.newArrayList(userDetails));
 
             userRepository.save(user);
 
@@ -79,11 +82,7 @@ public class NutrientConfig {
 
 
             User exampleUser = userRepository.findAll().get(0);
-            userDetails.setUser(exampleUser);
 
-            exampleUser.setUserDetails(Lists.newArrayList(userDetails));
-
-            userRepository.save(exampleUser);
 
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .amount(100)

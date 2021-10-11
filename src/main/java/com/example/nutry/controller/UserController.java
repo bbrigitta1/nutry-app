@@ -51,6 +51,7 @@ public class UserController {
     @GetMapping("/getuserdata")
     public UserDetailsDTO getUserData(){
 
+        //TODO get userID from session
         User user = userService.findById(1L);
 
         UserDetails userDetails = userDetailsService.findByDateAndUser(LocalDate.now(),user);
