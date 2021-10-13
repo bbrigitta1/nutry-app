@@ -50,7 +50,7 @@ public class FoodConsumedService implements IFoodConsumedService{
     }
 
     public List<FoodConsumed> findFoodConsumedsByUserAndConsumptionDate(User user, LocalDate date){
-        return foodConsumedRepository.findFoodConsumedsByUserAndConsumptionDate(user, date);
+        return foodConsumedRepository.findFoodConsumedsByUserAndConsumptionDateOrderById(user, date);
     }
 
 }

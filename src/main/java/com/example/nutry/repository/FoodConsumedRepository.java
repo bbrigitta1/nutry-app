@@ -18,7 +18,7 @@ public interface FoodConsumedRepository extends JpaRepository<FoodConsumed, Long
     @Transactional
     List<FoodConsumed> findByUserOrderById(User user);
 
-    List<FoodConsumed> findFoodConsumedsByUserAndConsumptionDate(User user, LocalDate date);
+    List<FoodConsumed> findFoodConsumedsByUserAndConsumptionDateOrderById(User user, LocalDate date);
 
 //    @Query("select subresult.nutrient_id2, sum(subresult.result) as res  from (\n" +
 //            "                  select (100 / fc.amount * fn.value) as result,\n" +

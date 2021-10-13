@@ -6,8 +6,10 @@ import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.FoodConsumedService;
 import com.example.nutry.service.NutrientService;
 import com.example.nutry.service.UserService;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,14 +38,13 @@ public class AddedFoodController {
     @Autowired
     UserService userService;
 
-
-    @GetMapping("/updatemealplan")
-    public MealPlanDTO getAllFoodsForTheDay() {
+    @PostMapping("/updatemealplan")
+    public MealPlanDTO getAllFoodsForTheDay(@RequestBody SelectedDateDTO selectedDate) {
 
         //TODO get user ID from session
         User exampleUser = userRepository.findAll().get(0);
         List<Food> foodsToDisplay = new ArrayList<>();
-        List<FoodConsumed> consumedFoodsByUser = foodConsumedService.findByUser(exampleUser);
+        List<FoodConsumed> consumedFoodsByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(exampleUser, selectedDate.getDate());
         for (FoodConsumed consumedFoodByUser: consumedFoodsByUser){
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .id(consumedFoodByUser.getId())
@@ -59,19 +60,18 @@ public class AddedFoodController {
         MealPlanDTO mealPlan= new MealPlanDTO();
         mealPlan.setFoods(foodsToDisplay);
         mealPlan.setMacroNutrients(getMacroNutrients());
-        System.out.println("mealplan " + mealPlan);
-        System.out.println("update");
         return mealPlan;
     }
 
     @PostMapping("/addfoodtomealplan")
-    public void saveFood(@RequestBody Food food){
+    public void saveFood(@RequestBody FoodDTO food){
 
         //TODO get user ID from session
+
         User exampleUser = userRepository.findAll().get(0);
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)
-                .consumptionDate(LocalDate.of(2021, 9, 1))
+                .consumptionDate(food.getDate())
                 .user(exampleUser)
                 .build();
         exampleUser.setFoodConsumeds(Lists.newArrayList(foodConsumed));
@@ -119,6 +119,15 @@ public class AddedFoodController {
         foodConsumedService.changeFoodAmountByCustomValue(consumedFoodId,amountChangeDTO.getAmount());
     }
 
+//    @PostMapping("/selectdate")
+//    public void selectDate(@RequestBody SelectedDateDTO selectedDate){
+//        User exampleUser = userRepository.findAll().get(0);
+//        System.out.println(foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(exampleUser,selectedDate.getDate()));
+//
+////        String [] hey = selectedDate.split("=");
+////        System.out.println(hey[0]);
+//    }
+
     private MacroNutrientsDTO getMacroNutrients() {
         HashMap<String, Integer> nutrients = new HashMap<>();
         User user = userService.findById(1L);
@@ -140,7 +149,6 @@ public class AddedFoodController {
             }
         }
 
-        System.out.println(sumOfProteins);
 
         MacroNutrientsDTO mn = MacroNutrientsDTO.builder()
                 .protein(sumOfProteins)
