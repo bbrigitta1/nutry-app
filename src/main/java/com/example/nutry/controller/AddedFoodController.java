@@ -59,7 +59,7 @@ public class AddedFoodController {
 
         MealPlanDTO mealPlan= new MealPlanDTO();
         mealPlan.setFoods(foodsToDisplay);
-        mealPlan.setMacroNutrients(getMacroNutrients());
+        mealPlan.setMacroNutrients(getMacroNutrients(selectedDate));
         return mealPlan;
     }
 
@@ -128,10 +128,10 @@ public class AddedFoodController {
 ////        System.out.println(hey[0]);
 //    }
 
-    private MacroNutrientsDTO getMacroNutrients() {
+    private MacroNutrientsDTO getMacroNutrients(SelectedDateDTO selectedDate) {
         HashMap<String, Integer> nutrients = new HashMap<>();
         User user = userService.findById(1L);
-        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, LocalDate.of(2021, 9, 1));
+        List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, selectedDate.getDate());
         Double sumOfProteins = 0.0;
         Double sumOfFat = 0.0;
         Double sumOfCarbohydrate = 0.0;
