@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -26,6 +29,8 @@ public class NutrientConfig {
 
     @Autowired
     AddedFoodService addedFoodService;
+
+    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     @Bean
     CommandLineRunner commandLineRunnerAddNutrient() {
@@ -57,7 +62,9 @@ public class NutrientConfig {
                     .build();
 
             User user = User.builder()
-                    .userName("Example User")
+                    .userName("exampleuser")
+                    .password(passwordEncoder.encode("password"))
+                    .roles(Arrays.asList("ROLE_USER"))
                     .build();
 
             UserDetails userDetails = UserDetails.builder()
