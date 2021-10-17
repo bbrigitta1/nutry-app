@@ -36,12 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/updatemealplan").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/updatemealplan").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").authenticated() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").authenticated() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/signin").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/signin").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/search/{searchWord}").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/search/{searchWord}").permitAll() // allowed by anyone
+
 //                .antMatchers(HttpMethod.GET, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.POST, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
