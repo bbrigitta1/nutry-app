@@ -33,7 +33,6 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody UserCredentials data) {
         try {
-            System.out.println("belefutottam");
             String username = data.getUsername();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
