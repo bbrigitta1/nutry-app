@@ -40,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/addfoodtomealplan").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/signin").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/signin").permitAll() // allowed by anyone
 //                .antMatchers(HttpMethod.GET, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.POST, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
