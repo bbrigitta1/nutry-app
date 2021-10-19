@@ -10,8 +10,12 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,11 +68,12 @@ public class AddedFoodController {
     }
 
     @PostMapping("/addfoodtomealplan")
-    public void saveFood(@RequestBody FoodDTO food){
+    public void saveFood(@RequestBody FoodDTO food, Authentication authentication, HttpServletRequest request){
 
         //TODO get user ID from session
+        System.out.println("auth.getname " + authentication.getName());
+        User exampleUser = userService.findUserByUserName(authentication.getName());
 
-        User exampleUser = userRepository.findAll().get(0);
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)
                 .consumptionDate(food.getDate())

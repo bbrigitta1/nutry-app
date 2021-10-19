@@ -3,6 +3,8 @@ package com.example.nutry.controller;
 import com.example.nutry.model.UserCredentials;
 import com.example.nutry.repository.UserRepository;
 import com.example.nutry.security.JwtTokenServices;
+import com.example.nutry.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,16 +12,23 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.LongToIntFunction;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class AuthController {
+
+    @Autowired
+    UserService userService;
 
     private final AuthenticationManager authenticationManager;
 
@@ -31,17 +40,24 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody UserCredentials data) {
+    public ResponseEntity signin(@RequestBody UserCredentials data, HttpServletRequest request) {
         try {
             String username = data.getUsername();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+
             List<String> roles = authentication.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
             String token = jwtTokenServices.createToken(username, roles);
+            HttpSession session = request.getSession();
+            System.out.println(userService.findUserByUserName(data.getUsername()).getId().getClass().getTypeName()); //Long
+            System.out.println(userService.findUserByUserName(data.getUsername()).getId().toString()); // 1 (user id)
+            session.setAttribute("id", userService.findUserByUserName(data.getUsername()).getId().toString());
+            System.out.println("session id" + session.getAttribute("id")); // id in session
+            System.out.println("id "+session.getId()); // session id
 
             Map<Object, Object> model = new HashMap<>();
             model.put("username", username);
