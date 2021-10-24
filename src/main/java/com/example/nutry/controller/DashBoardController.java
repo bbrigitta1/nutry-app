@@ -35,10 +35,11 @@ public class DashBoardController {
 
     @PostMapping("/getenergyhistory")
     public List<EnergyHistoryDTO> getEnergyForPeriod (@RequestBody EnergyPeriodDTO energyPeriodDTO) {
+        System.out.println("helloo");
         List<EnergyHistoryDTO> result = new ArrayList<>();
         User user = userService.findById(1L);
         LocalDate end = LocalDate.now().plusDays(1);
-        LocalDate start = end.minusDays(2);
+        LocalDate start = end.minusDays(energyPeriodDTO.getPeriod());
 
 //        LocalDate end = LocalDate.of(2021, 9, 3);
 //        LocalDate start = LocalDate.of(2021, 8, 30);
