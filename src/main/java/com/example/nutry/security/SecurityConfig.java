@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/signin").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/signin").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/getuserdata").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/getuserdata").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/search/{searchWord}").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/search/{searchWord}").permitAll() // allowed by anyone
 
