@@ -40,6 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/addfoodtomealplan").authenticated() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/getweighthistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/getweighthistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/getwaterhistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/getwaterhistory").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/get-avg-macronutrients-for-period").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/get-avg-macronutrients-for-period").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/signin").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/signin").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/search/{searchWord}").permitAll() // allowed by anyone

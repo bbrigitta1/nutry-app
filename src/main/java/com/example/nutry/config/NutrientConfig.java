@@ -93,13 +93,13 @@ public class NutrientConfig {
 
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .amount(100)
-                    .consumptionDate(LocalDate.of(2021, 9, 1))
+                    .consumptionDate(LocalDate.of(2021, 10, 24))
                     .user(exampleUser)
                     .build();
 
             FoodConsumed foodConsumed2 = FoodConsumed.builder()
                     .amount(100)
-                    .consumptionDate(LocalDate.of(2021, 9, 1))
+                    .consumptionDate(LocalDate.of(2021, 10, 24))
                     .user(exampleUser)
                     .build();
             exampleUser.setFoodConsumeds(Lists.newArrayList(foodConsumed, foodConsumed2));

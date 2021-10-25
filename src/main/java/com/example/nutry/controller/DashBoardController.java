@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,21 +33,134 @@ public class DashBoardController {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @PostMapping("/get-avg-nutrients-for-period")         // TODO refactor, use one period dto
+    public NutrientsDTO getAvgNutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+
+        return null;
+    }
+
+
+    @PostMapping("/get-avg-macronutrients-for-period")          // TODO refactor, use one period dto
+    public MacroNutrientsDTO getAvgMacronutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+        User user = userService.findById(1L);
+
+        LocalDate end = LocalDate.now().plusDays(1);
+        LocalDate start = end.minusDays(periodDTO.getPeriod());
+
+        List<LocalDate> dateList = start.datesUntil(end)
+                .collect(Collectors.toList());
+
+        Double sumOfProteins = 0.0;
+        Double sumOfFat = 0.0;
+        Double sumOfCarbohydrate = 0.0;
+        Double nrOfDays = 0.0;
+
+        for (LocalDate dat : dateList) {
+            List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
+            if (!foodsConsumedByUser.isEmpty()) {
+                nrOfDays += 1.0;
+                for (FoodConsumed foodConsumed : foodsConsumedByUser ) {
+                    for (FoodNutrient foodNutrient : foodConsumed.getFood().getFoodNutrients()) {
+                        if (foodNutrient.getNutrientId2().equals(1003L)) {
+                            sumOfProteins += foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+                        }
+                        if (foodNutrient.getNutrientId2().equals(1004L)) {
+                            sumOfFat += foodNutrient.getValue() * foodConsumed.getAmount() / 100 ;
+                        }
+                        if (foodNutrient.getNutrientId2().equals(1005L)) {
+                            sumOfCarbohydrate += foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+                        }
+                    }
+                }
+            }
+        }
+        MacroNutrientsDTO macroNutrientsDTO = MacroNutrientsDTO.builder()
+                .carbohydrate(sumOfCarbohydrate/nrOfDays)
+                .fat(sumOfFat/nrOfDays)
+                .protein(sumOfProteins/nrOfDays)
+                .build();
+
+
+        System.out.println("Macro: " + macroNutrientsDTO);
+        return macroNutrientsDTO;
+    }
+
+    @PostMapping("/getwaterhistory")                          // TODO refactor, use one period dto
+    public List<WaterHistoryDTO> getWaterForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+        List<WaterHistoryDTO> result = new ArrayList<>();
+
+        User user = userService.findById(1L);
+
+        LocalDate end = LocalDate.now().plusDays(1);
+        LocalDate start = end.minusDays(periodDTO.getPeriod());
+
+        List<LocalDate> dateList = start.datesUntil(end)
+                .collect(Collectors.toList());
+
+        for (LocalDate dat : dateList) {
+            LocalDate date = dat;
+            Integer actual =0;
+            Integer target = 0;
+
+            // TODO get from db
+            Random rand = new Random();
+            target += 3;
+            actual += rand.nextInt(3-1) + 1;
+
+            WaterHistoryDTO waterHistoryDTO = WaterHistoryDTO.builder()
+                    .date(date.format(DateTimeFormatter.ofPattern("dd.MM")))
+                    .actual(actual)
+                    .target(target)
+                    .build();
+            result.add(waterHistoryDTO);
+        }
+        System.out.println(result);
+        return result;
+    }
+
+    @PostMapping("/getweighthistory")                          // TODO refactor, use one period dto
+    public List<WeightHistoryDTO> getWeightForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+        List<WeightHistoryDTO> result = new ArrayList<>();
+
+        User user = userService.findById(1L);
+
+        LocalDate end = LocalDate.now().plusDays(1);
+        LocalDate start = end.minusDays(periodDTO.getPeriod());
+
+        List<LocalDate> dateList = start.datesUntil(end)
+                .collect(Collectors.toList());
+
+        for (LocalDate dat : dateList) {
+            LocalDate date = dat;
+            Integer actual =0;
+            Integer target = 0;
+
+            // TODO get from db
+            Random rand = new Random();
+            target += 60;
+            actual += rand.nextInt(75-67) + 67;
+
+            WeightHistoryDTO weightHistoryDTO = WeightHistoryDTO.builder()
+                    .date(date.format(DateTimeFormatter.ofPattern("dd.MM")))
+                    .actual(actual)
+                    .target(target)
+                    .build();
+            result.add(weightHistoryDTO);
+        }
+        System.out.println(result);
+        return result;
+    }
+
 
     @PostMapping("/getenergyhistory")
     public List<EnergyHistoryDTO> getEnergyForPeriod (@RequestBody EnergyPeriodDTO energyPeriodDTO) {
-        System.out.println("helloo");
         List<EnergyHistoryDTO> result = new ArrayList<>();
         User user = userService.findById(1L);
         LocalDate end = LocalDate.now().plusDays(1);
         LocalDate start = end.minusDays(energyPeriodDTO.getPeriod());
 
-//        LocalDate end = LocalDate.of(2021, 9, 3);
-//        LocalDate start = LocalDate.of(2021, 8, 30);
-
         List<LocalDate> dateList = start.datesUntil(end)
                     .collect(Collectors.toList());
-        System.out.println(dateList);
 
         for (LocalDate dat : dateList) {
             LocalDate date = dat;
@@ -64,8 +178,7 @@ public class DashBoardController {
                 consumed += foodConsumed.getFood().getEnergy()*foodConsumed.getAmount()/100;
             }
             EnergyHistoryDTO energyHistoryDTO = EnergyHistoryDTO.builder()
-                    .date(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                    //.date("valami")
+                    .date(date.format(DateTimeFormatter.ofPattern("dd.MM")))
                     .consumed(consumed)
                     .recommended(recommended)
                     .build();
