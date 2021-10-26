@@ -25,7 +25,7 @@ public class FoodNutrient {
     private double value;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Food food;
 
     @ManyToOne
