@@ -25,7 +25,7 @@ public class UserDetailsService implements IUserDetailsService{
     @Override
     public UserDetails findLatestByDateAndUser(LocalDate date, User user) {
         List<UserDetails> userDetailsList = userDetailsRepository.findAllByDateLessThanEqualAndUser(date, user);
-        System.out.println(userDetailsList);
+        //System.out.println(userDetailsList);
         if (userDetailsList.size() == 0) {
             return null;
         }

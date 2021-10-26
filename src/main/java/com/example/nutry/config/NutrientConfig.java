@@ -41,249 +41,294 @@ public class NutrientConfig {
                     .nutrientId2(1087L)
                     .nutrientName("Calcium, Ca")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
 
             Nutrient nutrient2 = Nutrient.builder()
                     .nutrientId2(1003L)
                     .nutrientName("Protein")
                     .unitName("G")
+                    .category("Protein")
                     .build();
 
             Nutrient nutrient3 = Nutrient.builder()
                     .nutrientId2(1004L)
                     .nutrientName("Total lipid (fat)")
                     .unitName("G")
+                    .category("Lipids")
                     .build();
 
             Nutrient nutrient4 = Nutrient.builder()
                     .nutrientId2(1005L)
                     .nutrientName("Carbohydrate, by difference")
                     .unitName("MG")
+                    .category("Carbohydrates")
                     .build();
 
             Nutrient nutrient5 = Nutrient.builder()
                     .nutrientId2(1008L)
                     .nutrientName("Energy")
                     .unitName("KCAL")
+                    .category("General")
                     .build();
 
             Nutrient nutrient6 = Nutrient.builder()
                     .nutrientId2(1018L)
                     .nutrientName("Alcohol")
                     .unitName("G")
+                    .category("General")
                     .build();
 
             Nutrient nutrient7 = Nutrient.builder()
                     .nutrientId2(1051L)
                     .nutrientName("Water")
                     .unitName("G")
+                    .category("General")
                     .build();
 
             Nutrient nutrient8 = Nutrient.builder()
                     .nutrientId2(1057L)
                     .nutrientName("Caffeine")
                     .unitName("MG")
+                    .category("General")
                     .build();
 
             Nutrient nutrient9 = Nutrient.builder()
                     .nutrientId2(1058L)
                     .nutrientName("Theobromine")
                     .unitName("MG")
+                    .category("Others")
                     .build();
             Nutrient nutrient10 = Nutrient.builder()
                     .nutrientId2(2000L)
                     .nutrientName("Sugars")
                     .unitName("G")
+                    .category("Carbohydrates")
                     .build();
             Nutrient nutrien11 = Nutrient.builder()
                     .nutrientId2(1079L)
                     .nutrientName("Fiber")
                     .unitName("G")
+                    .category("Carbohydrates")
                     .build();
             Nutrient nutrient12 = Nutrient.builder()
                     .nutrientId2(1089L)
                     .nutrientName("Iron, Fe")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient13 = Nutrient.builder()
                     .nutrientId2(1090L)
                     .nutrientName("Magnesium, Mg")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient14 = Nutrient.builder()
                     .nutrientId2(1091L)
                     .nutrientName("Phosphorus, P")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient15 = Nutrient.builder()
                     .nutrientId2(1092L)
                     .nutrientName("Potassium, K")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient16 = Nutrient.builder()
                     .nutrientId2(1093L)
                     .nutrientName("Sodium")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient17= Nutrient.builder()
                     .nutrientId2(1095L)
                     .nutrientName("Zinc")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient18= Nutrient.builder()
                     .nutrientId2(1098L)
                     .nutrientName("Coppoer, Cu")
                     .unitName("MG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient19= Nutrient.builder()
                     .nutrientId2(1103L)
                     .nutrientName("Selenium")
                     .unitName("UG")
+                    .category("Minerals")
                     .build();
             Nutrient nutrient20= Nutrient.builder()
                     .nutrientId2(1105L)
                     .nutrientName("Retinol")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient21= Nutrient.builder()
                     .nutrientId2(1106L)
                     .nutrientName("Vitamin A")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient22= Nutrient.builder()
                     .nutrientId2(1107L)
                     .nutrientName("Carotene, beta")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient23= Nutrient.builder()
                     .nutrientId2(1108L)
                     .nutrientName("Carotene, alpha")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient24= Nutrient.builder()
                     .nutrientId2(1109L)
                     .nutrientName("Vitamin E")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient25= Nutrient.builder()
                     .nutrientId2(1114L)
                     .nutrientName("Vitamin D (D2 + D3)")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
 
             Nutrient nutrient26= Nutrient.builder()
                     .nutrientId2(1120L)
                     .nutrientName("Cryptoxanthin, beta")
                     .unitName("UG")
+                    .category("Others")
                     .build();
 
             Nutrient nutrient27= Nutrient.builder()
                     .nutrientId2(1122L)
                     .nutrientName("Lycopene")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient28= Nutrient.builder()
                     .nutrientId2(1123L)
                     .nutrientName("Lutein + zeaxanthin")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient29= Nutrient.builder()
                     .nutrientId2(1162L)
                     .nutrientName("Vitamin C")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient30= Nutrient.builder()
                     .nutrientId2(1165L)
-                    .nutrientName("Thiamin")
+                    .nutrientName("Vitamin B1 (Thiamin)")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
 
             Nutrient nutrient31= Nutrient.builder()
                     .nutrientId2(1166L)
-                    .nutrientName("Riboflavin")
+                    .nutrientName("Vitamin B2 (Riboflavin)")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
 
 
             Nutrient nutrient32= Nutrient.builder()
                     .nutrientId2(1167L)
-                    .nutrientName("Niacin")
+                    .nutrientName("Vitamin B2 (Niacin)")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient33= Nutrient.builder()
                     .nutrientId2(1175L)
                     .nutrientName("Vitamin B6")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient34= Nutrient.builder()
                     .nutrientId2(1177L)
                     .nutrientName("Folate")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient35= Nutrient.builder()
                     .nutrientId2(1178L)
                     .nutrientName("Vitamin B12")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
 
             Nutrient nutrient36= Nutrient.builder()
                     .nutrientId2(1180L)
-                    .nutrientName("Choline")
+                    .nutrientName("Vitamin B8 (Choline)")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
-
 
             Nutrient nutrient37= Nutrient.builder()
                     .nutrientId2(1185L)
                     .nutrientName("Vitamin K")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient38 = Nutrient.builder()
                     .nutrientId2(1186L)
                     .nutrientName("Folic acid")
                     .unitName("UG")
+                    .category("Others")
                     .build();
             Nutrient nutrient39 = Nutrient.builder()
                     .nutrientId2(1187L)
                     .nutrientName("Folate, food")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient40 = Nutrient.builder()
                     .nutrientId2(1190L)
                     .nutrientName("Folate, DFE")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
 
             Nutrient nutrient41 = Nutrient.builder()
                     .nutrientId2(1242L)
                     .nutrientName("Vitamin E, added")
                     .unitName("MG")
+                    .category("Vitamins")
                     .build();
 
             Nutrient nutrient42 = Nutrient.builder()
                     .nutrientId2(1246L)
                     .nutrientName("Vitamin B12, added")
                     .unitName("UG")
+                    .category("Vitamins")
                     .build();
             Nutrient nutrient43 = Nutrient.builder()
                     .nutrientId2(1253L)
                     .nutrientName("Cholesterol")
                     .unitName("MG")
+                    .category("Lipids")
                     .build();
             Nutrient nutrient44 = Nutrient.builder()
                     .nutrientId2(1258L)
                     .nutrientName("Fatty acids, total saturated")
                     .unitName("G")
+                    .category("Lipids")
                     .build();
             Nutrient nutrient45 = Nutrient.builder()
                     .nutrientId2(1292L)
                     .nutrientName("Fatty acids, total monounsaturated")
                     .unitName("G")
+                    .category("Lipids")
                     .build();
             Nutrient nutrient46 = Nutrient.builder()
                     .nutrientId2(1293L)
                     .nutrientName("Fatty acids, total polyunsaturated")
                     .unitName("G")
+                    .category("Lipids")
                     .build();
 
 

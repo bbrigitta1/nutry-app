@@ -8,12 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class NutrientsDTO {
+public class NutrientsConsumedAvgDTO {
 
     private Long nutrientId2;
 
     private String nutrientName;
     private String unitName;
     private String category;
+    private Double avgConsumed;
 
 }

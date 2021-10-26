@@ -1,6 +1,7 @@
 package com.example.nutry.controller;
 
 import com.example.nutry.model.*;
+import com.example.nutry.repository.NutrientRepository;
 import com.example.nutry.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,7 +21,6 @@ public class DashBoardController {
     @Autowired
     private FoodConsumedService foodConsumedService;
 
-
     @Autowired
     private DashBoardService dashBoardService;
 
@@ -33,10 +30,71 @@ public class DashBoardController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @PostMapping("/get-avg-nutrients-for-period")         // TODO refactor, use one period dto
-    public NutrientsDTO getAvgNutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+    @Autowired
+    private NutrientService nutrientService;
 
-        return null;
+    @PostMapping("/get-avg-nutrients-for-period")         // TODO refactor, use one period dto
+    public List<NutrientsConsumedAvgDTO> getAvgNutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+        User user = userService.findById(1L);
+
+        LocalDate end = LocalDate.now().plusDays(1);
+        LocalDate start = end.minusDays(periodDTO.getPeriod());
+
+        List<LocalDate> dateList = start.datesUntil(end)
+                .collect(Collectors.toList());
+
+        Double nrOfDays = 0.0;
+
+        Map<NutrientsDTO, Double> nutrientConsumption = new HashMap<>();
+//        List<Nutrient> nutrients = nutrientService.findAll();
+//        for (Nutrient nutrient : nutrients) {
+//            nutrientConsumption.put(nutrient, 0.0);
+//        };
+
+        for (LocalDate dat : dateList) {
+            List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
+            if (!foodsConsumedByUser.isEmpty()) {
+                nrOfDays += 1.0;
+                for (FoodConsumed foodConsumed : foodsConsumedByUser ) {
+                    for (FoodNutrient foodNutrient : foodConsumed.getFood().getFoodNutrients()) {
+                        Nutrient actualFoodNutrient = foodNutrient.getNutrient();
+                        NutrientsDTO nutrientsDTO = NutrientsDTO.builder()
+                                .nutrientId2(actualFoodNutrient.getNutrientId2())
+                                .nutrientName(actualFoodNutrient.getNutrientName())
+                                .unitName(actualFoodNutrient.getUnitName())
+                                .category(actualFoodNutrient.getCategory())
+                                .build();
+                        if (nutrientConsumption.containsKey(nutrientsDTO)) {
+                            Double oldValue = nutrientConsumption.get(nutrientsDTO);
+                            Double newValue = foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+
+                            nutrientConsumption.put(nutrientsDTO, oldValue + newValue);
+                        } else {
+                            nutrientConsumption.put(nutrientsDTO, 0.0);
+                        }
+                    }
+                }
+            }
+        }
+        List<NutrientsConsumedAvgDTO> nutrientsConsumedDTOS = new ArrayList();
+        for (Map.Entry<NutrientsDTO, Double> entry : nutrientConsumption.entrySet()) {
+            NutrientsDTO key = entry.getKey();
+            Double value = entry.getValue();
+            nutrientConsumption.put(key, value/nrOfDays);
+            NutrientsConsumedAvgDTO nutrientsConsumedAvgDTO = NutrientsConsumedAvgDTO.builder()
+                    .avgConsumed(entry.getValue())
+                    .category(entry.getKey().getCategory())
+                    .nutrientName(entry.getKey().getNutrientName())
+                    .unitName(entry.getKey().getUnitName())
+                    .nutrientId2(entry.getKey().getNutrientId2())
+                    .build();
+            nutrientsConsumedDTOS.add(nutrientsConsumedAvgDTO);
+        }
+        //System.out.println(nutrientConsumption.toString());
+
+
+
+        return nutrientsConsumedDTOS;
     }
 
 
@@ -79,9 +137,7 @@ public class DashBoardController {
                 .fat(sumOfFat/nrOfDays)
                 .protein(sumOfProteins/nrOfDays)
                 .build();
-
-
-        System.out.println("Macro: " + macroNutrientsDTO);
+        //System.out.println("Macro: " + macroNutrientsDTO);
         return macroNutrientsDTO;
     }
 
@@ -114,7 +170,7 @@ public class DashBoardController {
                     .build();
             result.add(waterHistoryDTO);
         }
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 
@@ -147,10 +203,9 @@ public class DashBoardController {
                     .build();
             result.add(weightHistoryDTO);
         }
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
-
 
     @PostMapping("/getenergyhistory")
     public List<EnergyHistoryDTO> getEnergyForPeriod (@RequestBody EnergyPeriodDTO energyPeriodDTO) {
@@ -184,7 +239,7 @@ public class DashBoardController {
                     .build();
             result.add(energyHistoryDTO);
         }
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 

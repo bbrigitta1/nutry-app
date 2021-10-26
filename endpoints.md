@@ -106,3 +106,45 @@ consumedAmount:
 "Fatty acids, total saturated",
 "Fatty acids, total monounsaturated",
 "Fatty acids, total polyunsaturated",
+
+
+public Map<Nutrient, Double> getAvgMacronutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+        User user = userService.findById(1L);
+
+        LocalDate end = LocalDate.now().plusDays(1);
+        LocalDate start = end.minusDays(periodDTO.getPeriod());
+
+        List<LocalDate> dateList = start.datesUntil(end)
+                .collect(Collectors.toList());
+
+        Double nrOfDays = 0.0;
+
+        Map<Nutrient, Double> nutrientConsumption = new HashMap<>();
+
+        for (LocalDate dat : dateList) {
+            List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
+            if (!foodsConsumedByUser.isEmpty()) {
+                nrOfDays += 1.0;
+                for (FoodConsumed foodConsumed : foodsConsumedByUser ) {
+                    for (FoodNutrient foodNutrient : foodConsumed.getFood().getFoodNutrients()) {
+                        Nutrient actualFoodNutrient = foodNutrient.getNutrient();
+                        if (nutrientConsumption.containsKey(actualFoodNutrient)) {
+                            Double oldValue = nutrientConsumption.get(foodNutrient.getNutrient());
+                            Double newValue = foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+                            nutrientConsumption.put(actualFoodNutrient, oldValue + newValue);
+                        } else {
+                            nutrientConsumption.put(actualFoodNutrient, 0.0);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (Map.Entry<Nutrient, Double> entry : nutrientConsumption.entrySet()) {
+           Nutrient key = entry.getKey();
+           Double value = entry.getValue();
+           nutrientConsumption.put(key, value/nrOfDays);
+        }
+        System.out.println(nutrientConsumption.toString());;
+        return nutrientConsumption;
+    }

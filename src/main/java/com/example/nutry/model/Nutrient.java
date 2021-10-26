@@ -22,6 +22,7 @@ public class Nutrient {
 
     private String nutrientName;
     private String unitName;
+    private String category;
 
     @OneToMany(mappedBy = "nutrient", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
