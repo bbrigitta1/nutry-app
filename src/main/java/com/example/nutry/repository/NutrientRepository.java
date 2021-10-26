@@ -11,4 +11,6 @@ import java.util.List;
 public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     Nutrient findByNutrientId2(Long nutrientId);
 
+    @Override
+    <S extends Nutrient> List<S> saveAll(Iterable<S> iterable);
 }

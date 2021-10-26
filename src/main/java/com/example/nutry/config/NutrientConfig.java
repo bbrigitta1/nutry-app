@@ -274,16 +274,16 @@ public class NutrientConfig {
                     .nutrientName("Fatty acids, total saturated")
                     .unitName("G")
                     .build();
-//            Nutrient nutrient4 = Nutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .nutrientName("Carbohydrate")
-//                    .unitName("MG")
-//                    .build();
-//            Nutrient nutrient4 = Nutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .nutrientName("Carbohydrate")
-//                    .unitName("MG")
-//                    .build();
+            Nutrient nutrient45 = Nutrient.builder()
+                    .nutrientId2(1292L)
+                    .nutrientName("Fatty acids, total monounsaturated")
+                    .unitName("G")
+                    .build();
+            Nutrient nutrient46 = Nutrient.builder()
+                    .nutrientId2(1293L)
+                    .nutrientName("Fatty acids, total polyunsaturated")
+                    .unitName("G")
+                    .build();
 //            Nutrient nutrient4 = Nutrient.builder()
 //                    .nutrientId2(1005L)
 //                    .nutrientName("Carbohydrate")
@@ -319,10 +319,7 @@ public class NutrientConfig {
 
             userRepository.save(user);
 
-            nutrientService.save(nutrient1);
-            nutrientService.save(nutrient2);
-            nutrientService.save(nutrient3);
-            nutrientService.save(nutrient4);
+            nutrientService.saveAll(List.of(nutrient1, nutrient2, nutrient3,  nutrient4, nutrient5,nutrient6,nutrient7,nutrient8,nutrient9, nutrient10,nutrien11,nutrient12,nutrient13,nutrient14,nutrient15,nutrient16, nutrient17, nutrient18, nutrient19, nutrient20, nutrient21, nutrient22, nutrient23, nutrient24, nutrient25, nutrient26, nutrient27, nutrient28, nutrient29, nutrient30, nutrient31, nutrient32, nutrient33, nutrient34, nutrient35, nutrient36, nutrient37, nutrient38, nutrient39, nutrient40, nutrient41, nutrient42, nutrient43, nutrient44, nutrient45, nutrient46));
 
 
             User exampleUser = userRepository.findAll().get(0);
