@@ -15,6 +15,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -284,18 +285,6 @@ public class NutrientConfig {
                     .nutrientName("Fatty acids, total polyunsaturated")
                     .unitName("G")
                     .build();
-//            Nutrient nutrient4 = Nutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .nutrientName("Carbohydrate")
-//                    .unitName("MG")
-//                    .build();
-//            Nutrient nutrient4 = Nutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .nutrientName("Carbohydrate")
-//                    .unitName("MG")
-//                    .build();
-
-
 
 
             User user = User.builder()
@@ -312,18 +301,18 @@ public class NutrientConfig {
                     .age(30)
                     .user(user)
                     .goal(1.0)
-                    .date(LocalDate.now())
+                    .date(LocalDate.of(2021,10,1))
                     .build();
 
             user.setUserDetails(Lists.newArrayList(userDetails));
 
             userRepository.save(user);
 
-            nutrientService.saveAll(List.of(nutrient1, nutrient2, nutrient3,  nutrient4, nutrient5,nutrient6,nutrient7,nutrient8,nutrient9, nutrient10,nutrien11,nutrient12,nutrient13,nutrient14,nutrient15,nutrient16, nutrient17, nutrient18, nutrient19, nutrient20, nutrient21, nutrient22, nutrient23, nutrient24, nutrient25, nutrient26, nutrient27, nutrient28, nutrient29, nutrient30, nutrient31, nutrient32, nutrient33, nutrient34, nutrient35, nutrient36, nutrient37, nutrient38, nutrient39, nutrient40, nutrient41, nutrient42, nutrient43, nutrient44, nutrient45, nutrient46));
+            List<Nutrient> nutrients = List.of(nutrient1, nutrient2, nutrient3,  nutrient4, nutrient5,nutrient6,nutrient7,nutrient8,nutrient9, nutrient10,nutrien11,nutrient12,nutrient13,nutrient14,nutrient15,nutrient16, nutrient17, nutrient18, nutrient19, nutrient20, nutrient21, nutrient22, nutrient23, nutrient24, nutrient25, nutrient26, nutrient27, nutrient28, nutrient29, nutrient30, nutrient31, nutrient32, nutrient33, nutrient34, nutrient35, nutrient36, nutrient37, nutrient38, nutrient39, nutrient40, nutrient41, nutrient42, nutrient43, nutrient44, nutrient45, nutrient46);
+            nutrientService.saveAll(nutrients);
 
 
             User exampleUser = userRepository.findAll().get(0);
-
 
             FoodConsumed foodConsumed = FoodConsumed.builder()
                     .amount(100)
@@ -338,11 +327,11 @@ public class NutrientConfig {
                     .build();
             exampleUser.setFoodConsumeds(Lists.newArrayList(foodConsumed, foodConsumed2));
 
+
             Food foodNew = Food.builder()
                     .description("Apple")
                     .fdcId(1555L)
                     .energy(45)
-//                    .foodNutrients(food.getFoodNutrients())
                     .foodConsumed(Lists.newArrayList(foodConsumed))
                     .build();
             foodConsumed.setFood(foodNew);
@@ -351,58 +340,78 @@ public class NutrientConfig {
                     .description("Ham")
                     .fdcId(1669L)
                     .energy(45)
-//                    .foodNutrients(food.getFoodNutrients())
                     .foodConsumed(Lists.newArrayList(foodConsumed2))
                     .build();
             foodConsumed2.setFood(foodNew2);
 
+            List<FoodNutrient> foodNutrientsDummyFood = new ArrayList<>();
+            for (Nutrient nutrient: nutrients) {
+                foodNutrientsDummyFood.add(
+                        FoodNutrient.builder()
+                        .nutrientId2(nutrient.getNutrientId2())
+                        .value(10.9)
+                        .food(foodNew)
+                        .nutrient(nutrient)
+                        .build());
+            }
 
+            List<FoodNutrient> foodNutrientsDummyFood2 = new ArrayList<>();
+            for (Nutrient nutrient: nutrients) {
+                foodNutrientsDummyFood2.add(
+                        FoodNutrient.builder()
+                        .nutrientId2(nutrient.getNutrientId2())
+                        .value(10.9)
+                        .food(foodNew2)
+                        .nutrient(nutrient)
+                        .build());
+            }
 
-            FoodNutrient protein = FoodNutrient.builder()
-                    .nutrientId2(1003L)
-                    .value(13.8)
-                    .food(foodNew)
-                    .nutrient(nutrient2)
-                    .build();
+//            FoodNutrient protein = FoodNutrient.builder()
+//                    .nutrientId2(1003L)
+//                    .value(13.8)
+//                    .food(foodNew)
+//                    .nutrient(nutrient2)
+//                    .build();
+//
+//            FoodNutrient fat = FoodNutrient.builder()
+//                    .nutrientId2(1004L)
+//                    .value(20.5)
+//                    .food(foodNew)
+//                    .nutrient(nutrient3)
+//                    .build();
+//
+//            FoodNutrient carbohydrate = FoodNutrient.builder()
+//                    .nutrientId2(1005L)
+//                    .value(50.8)
+//                    .food(foodNew)
+//                    .nutrient(nutrient4)
+//                    .build();
+//
+//            FoodNutrient protein2 = FoodNutrient.builder()
+//                    .nutrientId2(1003L)
+//                    .value(13.8)
+//                    .food(foodNew2)
+//                    .nutrient(nutrient2)
+//                    .build();
+//
+//            FoodNutrient fat2 = FoodNutrient.builder()
+//                    .nutrientId2(1004L)
+//                    .value(20.5)
+//                    .food(foodNew2)
+//                    .nutrient(nutrient3)
+//                    .build();
+//
+//            FoodNutrient carbohydrate2 = FoodNutrient.builder()
+//                    .nutrientId2(1005L)
+//                    .value(50.8)
+//                    .food(foodNew2)
+//                    .nutrient(nutrient4)
+//                    .build();
 
-            FoodNutrient fat = FoodNutrient.builder()
-                    .nutrientId2(1004L)
-                    .value(20.5)
-                    .food(foodNew)
-                    .nutrient(nutrient3)
-                    .build();
+            //apple
+            foodNew.setFoodNutrients(foodNutrientsDummyFood);
 
-            FoodNutrient carbohydrate = FoodNutrient.builder()
-                    .nutrientId2(1005L)
-                    .value(50.8)
-                    .food(foodNew)
-                    .nutrient(nutrient4)
-                    .build();
-
-            FoodNutrient protein2 = FoodNutrient.builder()
-                    .nutrientId2(1003L)
-                    .value(13.8)
-                    .food(foodNew2)
-                    .nutrient(nutrient2)
-                    .build();
-
-            FoodNutrient fat2 = FoodNutrient.builder()
-                    .nutrientId2(1004L)
-                    .value(20.5)
-                    .food(foodNew2)
-                    .nutrient(nutrient3)
-                    .build();
-
-            FoodNutrient carbohydrate2 = FoodNutrient.builder()
-                    .nutrientId2(1005L)
-                    .value(50.8)
-                    .food(foodNew2)
-                    .nutrient(nutrient4)
-                    .build();
-
-
-            foodNew.setFoodNutrients(List.of(protein, fat, carbohydrate));
-            foodNew2.setFoodNutrients(List.of(protein2, fat2, carbohydrate2));
+            foodNew2.setFoodNutrients(foodNutrientsDummyFood2);
 
             foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setFood(foodNew)));
             foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setNutrient(nutrientService.getByNutrientId2(foodNutrient1.getNutrientId2()))));
@@ -411,7 +420,6 @@ public class NutrientConfig {
 
             addedFoodService.save(foodNew);
             addedFoodService.save(foodNew2);
-
         };
     }
 };
