@@ -1,6 +1,7 @@
 package com.example.nutry.controller;
 
 import com.example.nutry.model.*;
+import com.example.nutry.repository.DriNutrientRepository;
 import com.example.nutry.repository.NutrientRepository;
 import com.example.nutry.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,32 @@ public class DashBoardController {
     @Autowired
     private NutrientService nutrientService;
 
+    @Autowired
+    private DriNutrientService driNutrientService;
+
+
+    @PostMapping("/get-recommended-nutrients")         // TODO refactor, use one period dto
+    public List<NutrientsRecommendedDTO> getNutrientsRecommended(@RequestBody EnergyPeriodDTO periodDTO) {
+        User user = userService.findById(1L);
+
+        List<DriNutrient> driNutrients = driNutrientService.findByGender(0.0);
+
+        List<NutrientsRecommendedDTO> nutrientsRecommendedDTOS = new ArrayList<>();
+
+        for (DriNutrient driNutrient:driNutrients) {
+            nutrientsRecommendedDTOS.add(
+                    NutrientsRecommendedDTO.builder()
+                            .recommended(driNutrient.getRecommended())
+                            .nutrientName(driNutrient.getNutrient().getNutrientName())
+                            .unitName(driNutrient.getNutrient().getUnitName())
+                            .category(driNutrient.getNutrient().getCategory())
+                            .nutrientId2(driNutrient.getNutrient().getNutrientId2())
+                            .build()
+            );
+        }
+        return nutrientsRecommendedDTOS;
+    }
+
     @PostMapping("/get-avg-nutrients-for-period")         // TODO refactor, use one period dto
     public List<NutrientsConsumedAvgDTO> getAvgNutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
         User user = userService.findById(1L);
@@ -46,10 +73,6 @@ public class DashBoardController {
         Double nrOfDays = 0.0;
 
         Map<NutrientsDTO, Double> nutrientConsumption = new HashMap<>();
-//        List<Nutrient> nutrients = nutrientService.findAll();
-//        for (Nutrient nutrient : nutrients) {
-//            nutrientConsumption.put(nutrient, 0.0);
-//        };
 
         for (LocalDate dat : dateList) {
             List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
@@ -90,7 +113,6 @@ public class DashBoardController {
                     .build();
             nutrientsConsumedDTOS.add(nutrientsConsumedAvgDTO);
         }
-        //System.out.println(nutrientConsumption.toString());
         return nutrientsConsumedDTOS;
     }
 
