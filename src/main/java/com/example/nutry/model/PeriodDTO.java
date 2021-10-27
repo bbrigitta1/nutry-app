@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class EnergyPeriodDTO {
+public class PeriodDTO {
     Integer period;
 }

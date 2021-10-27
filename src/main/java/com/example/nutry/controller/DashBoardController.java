@@ -1,14 +1,11 @@
 package com.example.nutry.controller;
 
 import com.example.nutry.model.*;
-import com.example.nutry.repository.DriNutrientRepository;
-import com.example.nutry.repository.NutrientRepository;
 import com.example.nutry.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,11 +35,11 @@ public class DashBoardController {
     private DriNutrientService driNutrientService;
 
 
-    @PostMapping("/get-recommended-nutrients")         // TODO refactor, use one period dto
-    public List<NutrientsRecommendedDTO> getNutrientsRecommended(@RequestBody EnergyPeriodDTO periodDTO) {
+    @PostMapping("/get-recommended-nutrients")
+    public List<NutrientsRecommendedDTO> getNutrientsRecommended(@RequestBody PeriodDTO periodDTO) {
         User user = userService.findById(1L);
 
-        List<DriNutrient> driNutrients = driNutrientService.findByGender(0.0);
+        List<DriNutrient> driNutrients = driNutrientService.findByGender(0.0);   //TODO connect user and lifeStage
 
         List<NutrientsRecommendedDTO> nutrientsRecommendedDTOS = new ArrayList<>();
 
@@ -60,8 +57,8 @@ public class DashBoardController {
         return nutrientsRecommendedDTOS;
     }
 
-    @PostMapping("/get-avg-nutrients-for-period")         // TODO refactor, use one period dto
-    public List<NutrientsConsumedAvgDTO> getAvgNutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+    @PostMapping("/get-avg-nutrients-for-period")
+    public List<NutrientsConsumedAvgDTO> getAvgNutrientsForPeriod(@RequestBody PeriodDTO periodDTO) {
         User user = userService.findById(1L);
 
         LocalDate end = LocalDate.now().plusDays(1);
@@ -117,8 +114,8 @@ public class DashBoardController {
     }
 
 
-    @PostMapping("/get-avg-macronutrients-for-period")          // TODO refactor, use one period dto
-    public MacroNutrientsDTO getAvgMacronutrientsForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+    @PostMapping("/get-avg-macronutrients-for-period")
+    public MacroNutrientsDTO getAvgMacronutrientsForPeriod(@RequestBody PeriodDTO periodDTO) {
         User user = userService.findById(1L);
 
         LocalDate end = LocalDate.now().plusDays(1);
@@ -160,8 +157,8 @@ public class DashBoardController {
         return macroNutrientsDTO;
     }
 
-    @PostMapping("/getwaterhistory")                          // TODO refactor, use one period dto
-    public List<WaterHistoryDTO> getWaterForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+    @PostMapping("/getwaterhistory")
+    public List<WaterHistoryDTO> getWaterForPeriod(@RequestBody PeriodDTO periodDTO) {
         List<WaterHistoryDTO> result = new ArrayList<>();
 
         User user = userService.findById(1L);
@@ -193,8 +190,8 @@ public class DashBoardController {
         return result;
     }
 
-    @PostMapping("/getweighthistory")                          // TODO refactor, use one period dto
-    public List<WeightHistoryDTO> getWeightForPeriod(@RequestBody EnergyPeriodDTO periodDTO) {
+    @PostMapping("/getweighthistory")
+    public List<WeightHistoryDTO> getWeightForPeriod(@RequestBody PeriodDTO periodDTO) {
         List<WeightHistoryDTO> result = new ArrayList<>();
 
         User user = userService.findById(1L);
@@ -227,7 +224,7 @@ public class DashBoardController {
     }
 
     @PostMapping("/getenergyhistory")
-    public List<EnergyHistoryDTO> getEnergyForPeriod (@RequestBody EnergyPeriodDTO energyPeriodDTO) {
+    public List<EnergyHistoryDTO> getEnergyForPeriod (@RequestBody PeriodDTO energyPeriodDTO) {
         List<EnergyHistoryDTO> result = new ArrayList<>();
         User user = userService.findById(1L);
         LocalDate end = LocalDate.now().plusDays(1);
