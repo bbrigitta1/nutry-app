@@ -91,9 +91,6 @@ public class DashBoardController {
             nutrientsConsumedDTOS.add(nutrientsConsumedAvgDTO);
         }
         //System.out.println(nutrientConsumption.toString());
-
-
-
         return nutrientsConsumedDTOS;
     }
 

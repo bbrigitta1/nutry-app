@@ -1,9 +1,7 @@
 package com.example.nutry.config;
 
 import com.example.nutry.model.*;
-import com.example.nutry.repository.AddedFoodRepository;
-import com.example.nutry.repository.NutrientRepository;
-import com.example.nutry.repository.UserRepository;
+import com.example.nutry.repository.*;
 import com.example.nutry.service.AddedFoodService;
 import com.example.nutry.service.NutrientService;
 import org.assertj.core.util.Lists;
@@ -14,10 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Configuration
 public class NutrientConfig {
@@ -30,6 +30,12 @@ public class NutrientConfig {
 
     @Autowired
     AddedFoodService addedFoodService;
+
+    @Autowired
+    DriLifeStageRepository driLifeStageRepository;
+
+    @Autowired
+    DriNutrientRepository driNutrientRepository;
 
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
@@ -82,7 +88,7 @@ public class NutrientConfig {
             Nutrient nutrient7 = Nutrient.builder()
                     .nutrientId2(1051L)
                     .nutrientName("Water")
-                    .unitName("G")
+                    .unitName("L")
                     .category("General")
                     .build();
 
@@ -411,51 +417,7 @@ public class NutrientConfig {
                         .build());
             }
 
-//            FoodNutrient protein = FoodNutrient.builder()
-//                    .nutrientId2(1003L)
-//                    .value(13.8)
-//                    .food(foodNew)
-//                    .nutrient(nutrient2)
-//                    .build();
-//
-//            FoodNutrient fat = FoodNutrient.builder()
-//                    .nutrientId2(1004L)
-//                    .value(20.5)
-//                    .food(foodNew)
-//                    .nutrient(nutrient3)
-//                    .build();
-//
-//            FoodNutrient carbohydrate = FoodNutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .value(50.8)
-//                    .food(foodNew)
-//                    .nutrient(nutrient4)
-//                    .build();
-//
-//            FoodNutrient protein2 = FoodNutrient.builder()
-//                    .nutrientId2(1003L)
-//                    .value(13.8)
-//                    .food(foodNew2)
-//                    .nutrient(nutrient2)
-//                    .build();
-//
-//            FoodNutrient fat2 = FoodNutrient.builder()
-//                    .nutrientId2(1004L)
-//                    .value(20.5)
-//                    .food(foodNew2)
-//                    .nutrient(nutrient3)
-//                    .build();
-//
-//            FoodNutrient carbohydrate2 = FoodNutrient.builder()
-//                    .nutrientId2(1005L)
-//                    .value(50.8)
-//                    .food(foodNew2)
-//                    .nutrient(nutrient4)
-//                    .build();
-
-            //apple
             foodNew.setFoodNutrients(foodNutrientsDummyFood);
-
             foodNew2.setFoodNutrients(foodNutrientsDummyFood2);
 
             foodNew.getFoodNutrients().forEach((foodNutrient1 -> foodNutrient1.setFood(foodNew)));
@@ -465,6 +427,86 @@ public class NutrientConfig {
 
             addedFoodService.save(foodNew);
             addedFoodService.save(foodNew2);
+
+            //Config of recommended nutrients:
+
+            List<String> femaleDataFiltered = Files.lines(Paths.get("src/main/resources/dri_data.txt"))
+                    .filter(x -> x.contains("Female"))
+                    .collect(Collectors.toList());
+            List<String[]> splitFemaleDataFiltered = femaleDataFiltered
+                    .stream()
+                    .map(x -> x.split("-"))
+                    .collect(Collectors.toList());
+
+
+            List<String> maleDataFiltered = Files.lines(Paths.get("src/main/resources/dri_data.txt"))
+                    .filter(x -> x.contains("Male"))
+                    .collect(Collectors.toList());
+            List<String[]> splitMaleDataFiltered = maleDataFiltered
+                    .stream()
+                    .map(x -> x.split("-"))
+                    .collect(Collectors.toList());
+
+            Map<String, Double> femaleDataMap = new HashMap<>();
+            Map<String, Double> maleDataMap = new HashMap<>();
+
+            for (String[] data : splitFemaleDataFiltered) {
+                if (!data[3].equals("ND")) {
+                    femaleDataMap.put(data[2], Double.parseDouble(data[3]));
+                } else {
+                    femaleDataMap.put(data[2], 0.0);
+                }
+            }
+
+            for (String[] data : splitMaleDataFiltered) {
+                if (!data[3].equals("ND")) {
+                    maleDataMap.put(data[2], Double.parseDouble(data[3]));
+                } else {
+                    maleDataMap.put(data[2], 0.0);
+                }
+            }
+
+            DriLifeStage male = DriLifeStage.builder()
+                    .gender(0.0)
+                    .stageType("General")
+                    .ageFrom(31)
+                    .ageTo(50)
+                    .build();
+
+            DriLifeStage female = DriLifeStage.builder()
+                    .gender(1.0)
+                    .stageType("General")
+                    .ageFrom(31)
+                    .ageTo(50)
+                    .build();
+
+            List<DriNutrient> driNutrientsMale = new ArrayList<>();
+            List<DriNutrient> driNutrientsFemale = new ArrayList<>();
+
+            for(Nutrient nutrient: nutrients) {
+                driNutrientsMale.add(
+                        DriNutrient.builder()
+                                .nutrient(nutrient)
+                                .recommended(maleDataMap.get(nutrient.getNutrientName()))
+                                .driLifeStage(male)
+                                .build()
+                );
+                driNutrientsFemale.add(
+                        DriNutrient.builder()
+                                .nutrient(nutrient)
+                                .recommended(femaleDataMap.get(nutrient.getNutrientName()))
+                                .driLifeStage(female)
+                                .build()
+                );
+            }
+            male.setDriNutrients(driNutrientsMale);
+            female.setDriNutrients(driNutrientsFemale);
+            male.getDriNutrients().forEach((drinutrient -> drinutrient.setDriLifeStage(male)));
+            female.getDriNutrients().forEach((drinutrient -> drinutrient.setDriLifeStage(female)));
+            male.getDriNutrients().forEach((drinutrient -> drinutrient.setNutrient(nutrientService.getByNutrientId2(drinutrient.getNutrient().getNutrientId2()))));
+            female.getDriNutrients().forEach((drinutrient -> drinutrient.setNutrient(nutrientService.getByNutrientId2(drinutrient.getNutrient().getNutrientId2()))));
+            driLifeStageRepository.save(male);
+            driLifeStageRepository.save(female);
         };
     }
 };

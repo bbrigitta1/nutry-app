@@ -28,6 +28,10 @@ public class Nutrient {
     @EqualsAndHashCode.Exclude
     List<FoodNutrient> foodNutrients;
 
+    @OneToMany(mappedBy = "nutrient", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    private List<DriNutrient> driNutrients;
+
     @Override
     public String toString() {
         return "Nutrient{" +

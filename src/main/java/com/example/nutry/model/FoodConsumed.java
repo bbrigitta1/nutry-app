@@ -22,8 +22,6 @@ public class FoodConsumed {
     @ManyToOne
     private User user;
 
-    //private Long foodId;
-
     private int amount;
 
     private LocalDate consumptionDate;
