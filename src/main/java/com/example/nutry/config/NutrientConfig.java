@@ -340,6 +340,7 @@ public class NutrientConfig {
 
             User user = User.builder()
                     .userName("exampleuser")
+                    .email("examp@examp.com")
                     .password(passwordEncoder.encode("password"))
                     .roles(Arrays.asList("ROLE_USER"))
                     .build();
@@ -349,6 +350,7 @@ public class NutrientConfig {
                     .weight(80)
                     .activity(1.1)
                     .gender(0.0)
+                    .birthdate(LocalDate.of(1991,11,17))
                     .age(30)
                     .user(user)
                     .goal(1.0)

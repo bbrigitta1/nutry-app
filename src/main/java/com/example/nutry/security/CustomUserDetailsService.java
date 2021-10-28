@@ -25,11 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService {
      * Spring will call this code to retrieve a user upon login from the DB.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.example.nutry.model.User appUser = users.findUserByUserName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        com.example.nutry.model.User appUser = users.findUserByEmail(email);
 //                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
 
-        return new User(appUser.getUserName(), appUser.getPassword(),
+        return new User(appUser.getEmail(), appUser.getPassword(),
                 appUser.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
 }

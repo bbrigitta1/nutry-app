@@ -42,30 +42,30 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody UserCredentials data, HttpServletRequest request) {
         try {
-            String username = data.getUsername();
+            String email = data.getEmail();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, data.getPassword()));
 
             List<String> roles = authentication.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            String token = jwtTokenServices.createToken(username, roles);
+            String token = jwtTokenServices.createToken(email, roles);
             HttpSession session = request.getSession();
-            System.out.println(userService.findUserByUserName(data.getUsername()).getId().getClass().getTypeName()); //Long
-            System.out.println(userService.findUserByUserName(data.getUsername()).getId().toString()); // 1 (user id)
-            session.setAttribute("id", userService.findUserByUserName(data.getUsername()).getId().toString());
+            System.out.println(userService.findUserByEmail(data.getEmail()).getId().getClass().getTypeName()); //Long
+            System.out.println(userService.findUserByEmail(data.getEmail()).getId().toString()); // 1 (user id)
+            session.setAttribute("id", userService.findUserByEmail(data.getEmail()).getId().toString());
             System.out.println("session id" + session.getAttribute("id")); // id in session
             System.out.println("id "+session.getId()); // session id
 
             Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
+            model.put("username", email);
             model.put("roles", roles);
             model.put("token", token);
             return ResponseEntity.ok(model);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username/password supplied");
+            throw new BadCredentialsException("Invalid email/password supplied");
         }
     }
 }

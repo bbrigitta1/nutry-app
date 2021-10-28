@@ -19,7 +19,8 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //TODO check age handling
+    private LocalDate birthdate;
+
     private int age;
 
     private int weight;

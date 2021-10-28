@@ -12,6 +12,10 @@ public class UserRegistrationDTO {
 
     private String userName;
 
+    private String email;
+
+    private LocalDate birthdate;
+
     private int age;
 
     private int weight;

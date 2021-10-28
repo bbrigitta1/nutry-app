@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @RestController
@@ -29,12 +30,14 @@ public class UserController {
 
         User user = User.builder()
                 .userName(userDTO.getUserName())
+                .email(userDTO.getEmail())
                 .build();
 
         UserDetails userDetails = UserDetails.builder()
                 .weight(userDTO.getWeight())
                 .activity(userDTO.getActivity())
-                .age(userDTO.getAge())
+                .birthdate(userDTO.getBirthdate())
+                .age(Period.between(userDTO.getBirthdate(), LocalDate.now()).getYears())
                 .gender(userDTO.getGender())
                 .goal(userDTO.getGoal())
                 .height(userDTO.getHeight())
@@ -44,7 +47,7 @@ public class UserController {
 
         user.setUserDetails(Lists.newArrayList(userDetails));
 
-//        System.out.println(user);
+        System.out.println(user);
         userService.save(user);
     };
 
@@ -54,7 +57,7 @@ public class UserController {
         //TODO get userID from session
         User user = userService.findById(1L);
 
-        UserDetails userDetails = userDetailsService.findByDateAndUser(LocalDate.now(),user);
+        UserDetails userDetails = userDetailsService.findLatestByDateAndUser(LocalDate.now(),user);
 
 
         UserDetailsDTO userDetailsDTO= new UserDetailsDTO();
