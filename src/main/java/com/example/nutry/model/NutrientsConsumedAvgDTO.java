@@ -16,5 +16,6 @@ public class NutrientsConsumedAvgDTO {
     private String unitName;
     private String category;
     private Double avgConsumed;
+    private Double recommended;
 
 }

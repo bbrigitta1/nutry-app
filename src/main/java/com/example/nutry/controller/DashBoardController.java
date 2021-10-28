@@ -34,12 +34,36 @@ public class DashBoardController {
     @Autowired
     private DriNutrientService driNutrientService;
 
+    @Autowired
+    private DriLifeStageService driLifeStageService;
 
-    @PostMapping("/get-recommended-nutrients")
-    public List<NutrientsRecommendedDTO> getNutrientsRecommended(@RequestBody PeriodDTO periodDTO) {
+
+//    @PostMapping("/get-recommended-nutrients")
+//    public List<NutrientsRecommendedDTO> getNutrientsRecommended(@RequestBody PeriodDTO periodDTO) {
+//        User user = userService.findById(1L);
+//
+//        List<DriNutrient> driNutrients = driNutrientService.findAllByLifeStage(driLifeStageService.findByGender(0.0));   //TODO connect user and lifeStage
+//
+//        List<NutrientsRecommendedDTO> nutrientsRecommendedDTOS = new ArrayList<>();
+//
+//        for (DriNutrient driNutrient:driNutrients) {
+//            nutrientsRecommendedDTOS.add(
+//                    NutrientsRecommendedDTO.builder()
+//                            .recommended(driNutrient.getRecommended())
+//                            .nutrientName(driNutrient.getNutrient().getNutrientName())
+//                            .unitName(driNutrient.getNutrient().getUnitName())
+//                            .category(driNutrient.getNutrient().getCategory())
+//                            .nutrientId2(driNutrient.getNutrient().getNutrientId2())
+//                            .build()
+//            );
+//        }
+//        return nutrientsRecommendedDTOS;
+//    }
+
+    public List<NutrientsRecommendedDTO> getNutrientsRecommendedFromDb() {
         User user = userService.findById(1L);
 
-        List<DriNutrient> driNutrients = driNutrientService.findByGender(0.0);   //TODO connect user and lifeStage
+        List<DriNutrient> driNutrients = driNutrientService.findAllByLifeStage(driLifeStageService.findByGender(0.0));   //TODO connect user and lifeStage
 
         List<NutrientsRecommendedDTO> nutrientsRecommendedDTOS = new ArrayList<>();
 
@@ -96,13 +120,16 @@ public class DashBoardController {
                 }
             }
         }
+        List<DriNutrient> driNutrients = driNutrientService.findAllByLifeStage(driLifeStageService.findByGender(0.0));
         List<NutrientsConsumedAvgDTO> nutrientsConsumedDTOS = new ArrayList();
+
         for (Map.Entry<NutrientsDTO, Double> entry : nutrientConsumption.entrySet()) {
             NutrientsDTO key = entry.getKey();
             Double value = entry.getValue();
             nutrientConsumption.put(key, value/nrOfDays);
             NutrientsConsumedAvgDTO nutrientsConsumedAvgDTO = NutrientsConsumedAvgDTO.builder()
                     .avgConsumed(entry.getValue())
+                    .recommended(driNutrientService.getByNutrientIdAndLifeStage(nutrientService.getByNutrientId2(entry.getKey().getNutrientId2()).getId(), driLifeStageService.findByGender(0.0)).getRecommended())  // TODO refactor
                     .category(entry.getKey().getCategory())
                     .nutrientName(entry.getKey().getNutrientName())
                     .unitName(entry.getKey().getUnitName())
@@ -110,6 +137,7 @@ public class DashBoardController {
                     .build();
             nutrientsConsumedDTOS.add(nutrientsConsumedAvgDTO);
         }
+        System.out.println(nutrientsConsumedDTOS.toString());
         return nutrientsConsumedDTOS;
     }
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DriLifeStageRepository extends JpaRepository <DriLifeStage, Long> {
 
+    DriLifeStage findByGender(Double gender);
 
 
 }
