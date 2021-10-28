@@ -70,9 +70,8 @@ public class AddedFoodController {
     @PostMapping("/addfoodtomealplan")
     public void saveFood(@RequestBody FoodDTO food, Authentication authentication, HttpServletRequest request){
 
-        //TODO get user ID from session
-        System.out.println("auth.getname " + authentication.getName());
-        User exampleUser = userService.findUserByUserName(authentication.getName());
+        //TODO get user ID from sessin
+        User exampleUser = userService.findById(1L);
 
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)

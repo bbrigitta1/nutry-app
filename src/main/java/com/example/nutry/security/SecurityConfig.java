@@ -36,8 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/updatemealplan").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/updatemealplan").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").authenticated() // allowed by anyone
-                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").authenticated() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").permitAll()  // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").permitAll()  // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getweighthistory").permitAll() // allowed by anyone
@@ -54,9 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/getuserdata").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/search/{searchWord}").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/search/{searchWord}").permitAll() // allowed by anyone
-//                .antMatchers(HttpMethod.GET, "/get-recommended-nutrients").permitAll() // allowed by anyone
-//                .antMatchers(HttpMethod.POST, "/get-recommended-nutrients").permitAll() // allowed by anyone
-
+                .antMatchers(HttpMethod.GET, "/changeamountoffood").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/changeamountoffood").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/deletefood").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/deletefood").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/changeamountoffoodtocustomvalue").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/changeamountoffoodtocustomvalue").permitAll() // allowed by anyone
 //                .antMatchers(HttpMethod.GET, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.POST, "http://localhost:3000/nutrition-details").permitAll() // allowed only when signed in
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
