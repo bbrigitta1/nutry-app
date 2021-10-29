@@ -9,6 +9,8 @@ import com.example.nutry.service.UserDetailsService;
 import com.example.nutry.service.UserService;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,6 +20,9 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
 public class UserController {
+
+    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
 
     @Autowired
     UserService userService;
@@ -30,6 +35,7 @@ public class UserController {
 
         User user = User.builder()
                 .userName(userDTO.getUserName())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
                 .email(userDTO.getEmail())
                 .build();
 

@@ -10,6 +10,7 @@ import lombok.*;
 public class UserDetailsDTO {
 
     private String userName;
+    private String password;
     private String email;
     private Integer recommended;
 }
