@@ -34,5 +34,9 @@ public class NutrientService implements INutrientService{
         return nutrientRepository.findByNutrientId2(nutrientId);
     }
 
+    public String getNutrientNameByNutrientId2 (Long nutrientId2) {
+        return nutrientRepository.findNutrientByNutrientId2(nutrientId2).getNutrientName();
+    }
+
 
 }

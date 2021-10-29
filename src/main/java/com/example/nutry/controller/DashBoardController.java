@@ -97,24 +97,35 @@ public class DashBoardController {
 
         for (LocalDate dat : dateList) {
             List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
+            System.out.println("consumed: " + foodsConsumedByUser.toString());
             if (!foodsConsumedByUser.isEmpty()) {
                 nrOfDays += 1.0;
                 for (FoodConsumed foodConsumed : foodsConsumedByUser ) {
                     for (FoodNutrient foodNutrient : foodConsumed.getFood().getFoodNutrients()) {
-                        Nutrient actualFoodNutrient = foodNutrient.getNutrient();
-                        NutrientsDTO nutrientsDTO = NutrientsDTO.builder()
-                                .nutrientId2(actualFoodNutrient.getNutrientId2())
-                                .nutrientName(actualFoodNutrient.getNutrientName())
-                                .unitName(actualFoodNutrient.getUnitName())
-                                .category(actualFoodNutrient.getCategory())
-                                .build();
-                        if (nutrientConsumption.containsKey(nutrientsDTO)) {
-                            Double oldValue = nutrientConsumption.get(nutrientsDTO);
-                            Double newValue = foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+                        if (foodNutrient.getNutrient() != null) {
+                            Nutrient actualFoodNutrient = foodNutrient.getNutrient();
 
-                            nutrientConsumption.put(nutrientsDTO, oldValue + newValue);
-                        } else {
-                            nutrientConsumption.put(nutrientsDTO, 0.0);
+                            System.out.println("actfoodnutrient" + actualFoodNutrient.getNutrientName());
+                            System.out.println("check: " + foodNutrient.getNutrientId2().getClass());
+
+                            NutrientsDTO nutrientsDTO = NutrientsDTO.builder()
+                                    .nutrientId2(foodNutrient.getNutrientId2())
+                                    //.nutrientName(nutrientService.getNutrientNameByNutrientId2(foodNutrient.getNutrientId2()))
+                                    //.nutrientName(nutrientService.getNutrientNameByNutrientId2(1087L))
+                                    .nutrientName(actualFoodNutrient.getNutrientName())
+                                    .unitName(actualFoodNutrient.getUnitName())
+                                    .category(actualFoodNutrient.getCategory())
+                                    .build();
+
+                            if (nutrientConsumption.containsKey(nutrientsDTO)) {
+                                Double oldValue = nutrientConsumption.get(nutrientsDTO);
+                                Double newValue = foodNutrient.getValue() * foodConsumed.getAmount() / 100;
+
+                                nutrientConsumption.put(nutrientsDTO, oldValue + newValue);
+
+                            } else {
+                                nutrientConsumption.put(nutrientsDTO, 0.0);
+                            }
                         }
                     }
                 }

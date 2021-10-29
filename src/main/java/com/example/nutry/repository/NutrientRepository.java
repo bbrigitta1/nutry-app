@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     Nutrient findByNutrientId2(Long nutrientId);
+    Nutrient findNutrientByNutrientId2(Long nutrientId2);
+
 
     @Override
     <S extends Nutrient> List<S> saveAll(Iterable<S> iterable);
