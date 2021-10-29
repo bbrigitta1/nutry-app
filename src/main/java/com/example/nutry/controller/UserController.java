@@ -54,7 +54,7 @@ public class UserController {
         //TODO get userID from session
         User user = userService.findById(1L);
 
-        UserDetails userDetails = userDetailsService.findByDateAndUser(LocalDate.now(),user);
+        UserDetails userDetails = userDetailsService.findLatestByDateAndUser(LocalDate.now(),user);
 
 
         UserDetailsDTO userDetailsDTO= new UserDetailsDTO();
