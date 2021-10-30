@@ -43,10 +43,11 @@ public class AddedFoodController {
     UserService userService;
 
     @PostMapping("/updatemealplan")
-    public MealPlanDTO getAllFoodsForTheDay(@RequestBody SelectedDateDTO selectedDate) {
+    public MealPlanDTO getAllFoodsForTheDay(@RequestBody SelectedDateDTO selectedDate, Authentication authentication) {
 
         //TODO get user ID from session
-        User exampleUser = userRepository.findAll().get(0);
+
+        User exampleUser = userRepository.findUserByEmail(String.valueOf(authentication.getPrincipal()));
         List<Food> foodsToDisplay = new ArrayList<>();
         List<FoodConsumed> consumedFoodsByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(exampleUser, selectedDate.getDate());
         for (FoodConsumed consumedFoodByUser: consumedFoodsByUser){
@@ -69,9 +70,9 @@ public class AddedFoodController {
 
     @PostMapping("/addfoodtomealplan")
     public void saveFood(@RequestBody FoodDTO food, Authentication authentication, HttpServletRequest request){
-
-        //TODO get user ID from sessin
-        User exampleUser = userService.findById(1L);
+        System.out.println("authentication principal: " + authentication.getPrincipal());
+        //TODO get user ID from session
+        User exampleUser = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
 
         FoodConsumed foodConsumed = FoodConsumed.builder()
                 .amount(100)

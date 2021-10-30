@@ -36,10 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/addusertodatabase").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/addusertodatabase").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.POST, "/updatemealplan").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.GET, "/updatemealplan").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").permitAll()  // allowed by anyone
-                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").permitAll()  // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/updatemealplan").authenticated() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/updatemealplan").authenticated() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/addfoodtomealplan").authenticated()  // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/addfoodtomealplan").authenticated()  // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getenergyhistory").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getweighthistory").permitAll() // allowed by anyone

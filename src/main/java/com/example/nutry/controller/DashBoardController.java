@@ -97,7 +97,7 @@ public class DashBoardController {
 
         for (LocalDate dat : dateList) {
             List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
-            System.out.println("consumed: " + foodsConsumedByUser.toString());
+//            System.out.println("consumed: " + foodsConsumedByUser.toString());
             if (!foodsConsumedByUser.isEmpty()) {
                 nrOfDays += 1.0;
                 for (FoodConsumed foodConsumed : foodsConsumedByUser ) {
@@ -105,8 +105,8 @@ public class DashBoardController {
                         if (foodNutrient.getNutrient() != null) {
                             Nutrient actualFoodNutrient = foodNutrient.getNutrient();
 
-                            System.out.println("actfoodnutrient" + actualFoodNutrient.getNutrientName());
-                            System.out.println("check: " + foodNutrient.getNutrientId2().getClass());
+//                            System.out.println("actfoodnutrient" + actualFoodNutrient.getNutrientName());
+//                            System.out.println("check: " + foodNutrient.getNutrientId2().getClass());
 
                             NutrientsDTO nutrientsDTO = NutrientsDTO.builder()
                                     .nutrientId2(foodNutrient.getNutrientId2())
@@ -148,7 +148,7 @@ public class DashBoardController {
                     .build();
             nutrientsConsumedDTOS.add(nutrientsConsumedAvgDTO);
         }
-        System.out.println(nutrientsConsumedDTOS.toString());
+//        System.out.println(nutrientsConsumedDTOS.toString());
         return nutrientsConsumedDTOS;
     }
 
