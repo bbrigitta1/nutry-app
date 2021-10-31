@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.DELETE, "/vehicles/**").hasRole("ADMIN") // allowed if signed in with ADMIN role
                 .antMatchers(HttpMethod.GET, "/select-custom-nutrient").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/select-custom-nutrient").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/getselectednutrients").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/getselectednutrients").permitAll() // allowed by anyone
                 .anyRequest().denyAll() // anything else is denied
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices),
