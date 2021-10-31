@@ -61,13 +61,13 @@ public class SelectedNutrientsController {
 
     @PostMapping("/getselectednutrients")
     public List<MicroNutrientDTO> getSelectedNutrients(@RequestBody SelectedDateDTO selectedDate, Authentication authentication) {
-        System.out.println("helllloo");
-
         User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
         List<MicroNutrientDTO> selectedNutrients = new ArrayList<>();
         NutrientSelection nutrientSelection = selectedNutrientService.findNutrientSelectionByUser(user);
-        for (Nutrient nutrient : nutrientSelection.getSelectedNutrients()){
-            selectedNutrients.add(getMicroNutrient(selectedDate, nutrient.getNutrientId2()));
+        if (nutrientSelection != null) {
+            for (Nutrient nutrient : nutrientSelection.getSelectedNutrients()) {
+                selectedNutrients.add(getMicroNutrient(selectedDate, nutrient.getNutrientId2()));
+            }
         }
         System.out.println(selectedNutrients);
         return selectedNutrients;
