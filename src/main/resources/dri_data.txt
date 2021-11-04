@@ -1,0 +1,93 @@
+31–50-Female -Calcium, Ca-1000
+31–50-Female-Protein-46
+31–50-Female-Total lipid (fat)-ND
+31–50-Female-Carbohydrate, by difference-1300
+31–50-Female-Energy-ND
+31–50-Female-Alcohol-ND
+31–50-Female-Water-2.7
+31–50-Female-Caffeine-ND
+31–50-Female-Theobromine-ND
+31–50-Female-Sugars-ND
+31–50-Female-Fiber-25
+31–50-Female-Iron, Fe-18
+31–50-Female-Magnesium, Mg-320
+31–50-Female-Phosphorus, P-700
+31–50-Female-Potassium, K-2600
+31–50-Female-Sodium-1500
+31–50-Female-Zinc-8
+31–50-Female-Coppoer, Cu-900
+31–50-Female-Selenium-55
+31–50-Female-Retinol-ND
+31–50-Female-Vitamin A-700
+31–50-Female-Carotene, beta-ND
+31–50-Female-Carotene, alpha-ND
+31–50-Female-Vitamin E-15
+31–50-Female-Vitamin D (D2 + D3)-15
+31–50-Female-Cryptoxanthin, beta-ND
+31–50-Female-Lycopene-ND
+31–50-Female-Lutein + zeaxanthin-ND
+31–50-Female-Vitamin C-75
+31–50-Female-Vitamin B1 (Thiamin)-1.1
+31–50-Female-Vitamin B2 (Riboflavin)-1.1
+31–50-Female-Vitamin B2 (Niacin)-14
+31–50-Female-Vitamin B6-1.3
+31–50-Female-Folate-400
+31–50-Female-Vitamin B12-2.4
+31–50-Female-Vitamin B8 (Choline)-ND
+31–50-Female-Vitamin K-90
+31–50-Female-Folic acid-ND
+31–50-Female-Folate, food-ND
+31–50-Female-Folate, DFE-ND
+31–50-Female-Vitamin E, added-ND
+31–50-Female-Vitamin B12, added-ND
+31–50-Female-Cholesterol-ND
+31–50-Female-Fatty acids, total saturated-ND
+31–50-Female-Fatty acids, total monounsaturated-ND
+31–50-Female-Fatty acids, total polyunsaturated-ND
+31–50-Male-Calcium, Ca-1000
+31–50-Male-Protein-56
+31–50-Male-Total lipid (fat)-ND
+31–50-Male-Carbohydrate, by difference-1300
+31–50-Male-Energy-ND
+31–50-Male-Alcohol-ND
+31–50-Male-Water-3.7
+31–50-Male-Caffeine-ND
+31–50-Male-Theobromine-ND
+31–50-Male-Sugars-ND
+31–50-Male-Fiber-38
+31–50-Male-Iron, Fe-8
+31–50-Male-Magnesium, Mg-420
+31–50-Male-Phosphorus, P-700
+31–50-Male-Potassium, K-3400
+31–50-Male-Sodium-1500
+31–50-Male-Zinc-11
+31–50-Male-Coppoer, Cu-900
+31–50-Male-Selenium-55
+31–50-Male-Retinol-ND
+31–50-Male-Vitamin A-900
+31–50-Male-Carotene, beta-ND
+31–50-Male-Carotene, alpha-ND
+31–50-Male-Vitamin E-15
+31–50-Male-Vitamin D (D2 + D3)-15
+31–50-Male-Cryptoxanthin, beta-ND
+31–50-Male-Lycopene-ND
+31–50-Male-Lutein + zeaxanthin-ND
+31–50-Male-Vitamin C-90
+31–50-Male-Vitamin B1 (Thiamin)-1.2
+31–50-Male-Vitamin B2 (Riboflavin)-1.3
+31–50-Male-Vitamin B2 (Niacin)-16
+31–50-Male-Vitamin B6-1.3
+31–50-Male-Folate-400
+31–50-Male-Vitamin B12-2.4
+31–50-Male-Vitamin B8 (Choline)-ND
+31–50-Male-Vitamin K-120
+31–50-Male-Folic acid-ND
+31–50-Male-Folate, food-ND
+31–50-Male-Folate, DFE-ND
+31–50-Male-Vitamin E, added-ND
+31–50-Male-Vitamin B12, added-ND
+31–50-Male-Cholesterol-ND
+31–50-Male-Fatty acids, total saturated-ND
+31–50-Male-Fatty acids, total monounsaturated-ND
+31–50-Male-Fatty acids, total polyunsaturated-ND
+

@@ -1,13 +1,15 @@
-package com.example.codecooladvancednurtrybackend;
+package com.example.nutry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CodecoolAdvancedNurtryBackendApplication {
+public class Nutry {
 
     public static void main(String[] args) {
-        SpringApplication.run(CodecoolAdvancedNurtryBackendApplication.class, args);
+        SpringApplication.run(Nutry.class, args);
     }
+
+
 
 }
