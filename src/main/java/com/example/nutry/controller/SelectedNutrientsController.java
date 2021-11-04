@@ -89,6 +89,7 @@ public class SelectedNutrientsController {
         MicroNutrientDTO microNutrientDTO = MicroNutrientDTO.builder()
                 .nutrientName(nutrientService.getNutrientNameByNutrientId2(nutrientID))
                 .amount(sumOfNutrient)
+                .nutrientID(nutrientID)
                 .build();
         return microNutrientDTO;
     }

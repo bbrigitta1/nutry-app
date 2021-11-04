@@ -12,4 +12,5 @@ public class MicroNutrientDTO {
 
     private String nutrientName;
     private Double amount;
+    private Long nutrientID;
 }
