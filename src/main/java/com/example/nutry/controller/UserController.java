@@ -9,13 +9,21 @@ import com.example.nutry.service.UserDetailsService;
 import com.example.nutry.service.UserService;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -29,6 +37,8 @@ public class UserController {
 
     @Autowired
     UserDetailsService userDetailsService;
+
+    private static String imageDirectory = System.getProperty("user.dir") + "/images/";
 
     @PostMapping("/addusertodatabase")
     public void saveUser(@RequestBody UserRegistrationDTO userDTO){
@@ -81,6 +91,28 @@ public class UserController {
 
 
 
+    }
+
+    @PostMapping("/addprofilepicture")
+    public ResponseEntity<String> uploadPicture(@RequestBody MultipartFile file){
+        String name = "";
+        System.out.println("hey");
+        makeDirectoryIfNotExist(imageDirectory);
+        Path fileNamePath = Paths.get(imageDirectory,
+                name.concat(".").concat(FilenameUtils.getExtension(file.getOriginalFilename())));
+        try {
+            Files.write(fileNamePath, file.getBytes());
+            return new ResponseEntity<>(name, HttpStatus.CREATED);
+        } catch (IOException ex) {
+            return new ResponseEntity<>("Image is not uploaded", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void makeDirectoryIfNotExist(String imageDirectory) {
+        File directory = new File(imageDirectory);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
     }
 
 };

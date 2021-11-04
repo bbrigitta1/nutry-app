@@ -69,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/select-custom-nutrient").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/getselectednutrients").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getselectednutrients").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.GET, "/addprofilepicture").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/addprofilepicture").permitAll() // allowed by anyone
                 .anyRequest().denyAll() // anything else is denied
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices),
