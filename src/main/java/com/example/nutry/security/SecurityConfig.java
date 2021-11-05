@@ -1,5 +1,6 @@
 package com.example.nutry.security;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(JwtTokenServices jwtTokenServices) {
         this.jwtTokenServices = jwtTokenServices;
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -70,8 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/getselectednutrients").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getselectednutrients").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/addprofilepicture").permitAll() // allowed by anyone
-                .antMatchers(HttpMethod.POST, "/addprofilepicture").permitAll() // allowed by anyone
-                .anyRequest().denyAll() // anything else is denied
+                .antMatchers(HttpMethod.POST, "/addprofilepicture").permitAll() // allowed by anyone// allowed by anyone
+                .antMatchers("/profileimages/**").permitAll()
+                .anyRequest().denyAll()// anything else is denied
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices),
                         UsernamePasswordAuthenticationFilter.class);

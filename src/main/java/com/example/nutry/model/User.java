@@ -3,6 +3,7 @@ package com.example.nutry.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class User {
     private String userName;
 
     private String password;
+
+    private String profileImage;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude

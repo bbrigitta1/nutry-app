@@ -7,23 +7,32 @@ import com.example.nutry.model.UserDetailsDTO;
 import com.example.nutry.model.UserRegistrationDTO;
 import com.example.nutry.service.UserDetailsService;
 import com.example.nutry.service.UserService;
+import org.apache.commons.io.IOUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FilenameUtils;
 
+import javax.tools.FileObject;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Base64;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -38,7 +47,10 @@ public class UserController {
     @Autowired
     UserDetailsService userDetailsService;
 
-    private static String imageDirectory = System.getProperty("user.dir") + "/images/";
+    @Autowired
+    ResourceLoader resourceLoader;
+
+    private static String imageDirectory = System.getProperty("user.dir") + "/src/main/resources/static/profileimages";
 
     @PostMapping("/addusertodatabase")
     public void saveUser(@RequestBody UserRegistrationDTO userDTO){
@@ -94,18 +106,25 @@ public class UserController {
     }
 
     @PostMapping("/addprofilepicture")
-    public ResponseEntity<String> uploadPicture(@RequestBody MultipartFile file){
-        String name = "";
-        System.out.println("hey");
+    public void uploadPicture(@RequestBody MultipartFile file, Authentication authentication) throws IOException {
+        User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        String name = user.getEmail();
         makeDirectoryIfNotExist(imageDirectory);
         Path fileNamePath = Paths.get(imageDirectory,
                 name.concat(".").concat(FilenameUtils.getExtension(file.getOriginalFilename())));
-        try {
-            Files.write(fileNamePath, file.getBytes());
-            return new ResponseEntity<>(name, HttpStatus.CREATED);
-        } catch (IOException ex) {
-            return new ResponseEntity<>("Image is not uploaded", HttpStatus.BAD_REQUEST);
-        }
+        Files.write(fileNamePath, file.getBytes());
+        user.setProfileImage(imageDirectory + "/" + user.getEmail());
+        userService.save(user);
+
+    }
+
+
+    @GetMapping("/getprofilepicture")
+    public Resource getPicture() throws IOException {
+        File profileImageFile = resourceLoader.getResource("classpath:picture.jpeg").getFile();
+        System.out.println(profileImageFile);
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(profileImageFile));
+        return resource;
     }
 
     private void makeDirectoryIfNotExist(String imageDirectory) {
