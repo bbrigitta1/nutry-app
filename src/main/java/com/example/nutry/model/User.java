@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -27,7 +28,7 @@ public class User {
 
     private String password;
 
-    private String profileImage;
+    private String profileImageFilename;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude

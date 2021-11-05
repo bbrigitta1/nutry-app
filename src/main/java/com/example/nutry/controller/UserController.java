@@ -33,6 +33,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Base64;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins="http://localhost:3000")
@@ -49,6 +50,8 @@ public class UserController {
 
     @Autowired
     ResourceLoader resourceLoader;
+
+    private UUID uuid;
 
     private static String imageDirectory = System.getProperty("user.dir") + "/src/main/resources/static/profileimages";
 
@@ -108,23 +111,29 @@ public class UserController {
     @PostMapping("/addprofilepicture")
     public void uploadPicture(@RequestBody MultipartFile file, Authentication authentication) throws IOException {
         User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
-        String name = user.getEmail();
         makeDirectoryIfNotExist(imageDirectory);
+        if (user.getProfileImageFilename()!= null) {
+            String filenameWithNoExtension = user.getProfileImageFilename().toString().substring(0,user.getProfileImageFilename().toString().lastIndexOf('.'));
+            Files.deleteIfExists(Paths.get(imageDirectory,
+                    filenameWithNoExtension + ".jpg"));
+            Files.deleteIfExists(Paths.get(imageDirectory,
+                    filenameWithNoExtension + ".jpeg"));
+            Files.deleteIfExists(Paths.get(imageDirectory,
+                    filenameWithNoExtension + ".png"));
+        }
+        UUID fileName = UUID.randomUUID();
         Path fileNamePath = Paths.get(imageDirectory,
-                name.concat(".").concat(FilenameUtils.getExtension(file.getOriginalFilename())));
+                fileName + "." + (FilenameUtils.getExtension(file.getOriginalFilename())));
         Files.write(fileNamePath, file.getBytes());
-        user.setProfileImage(imageDirectory + "/" + user.getEmail());
+        user.setProfileImageFilename(fileName + "." + (FilenameUtils.getExtension(file.getOriginalFilename())));
         userService.save(user);
-
     }
 
 
     @GetMapping("/getprofilepicture")
-    public Resource getPicture() throws IOException {
-        File profileImageFile = resourceLoader.getResource("classpath:picture.jpeg").getFile();
-        System.out.println(profileImageFile);
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(profileImageFile));
-        return resource;
+    public String getPicture(@RequestBody Authentication authentication) throws IOException {
+        User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        return user.getProfileImageFilename();
     }
 
     private void makeDirectoryIfNotExist(String imageDirectory) {
