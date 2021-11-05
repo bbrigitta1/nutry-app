@@ -30,6 +30,7 @@ public class User {
 
     private String profileImageFilename;
 
+
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private List<FoodConsumed> foodConsumeds;

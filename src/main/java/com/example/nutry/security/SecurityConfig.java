@@ -73,6 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/getselectednutrients").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.GET, "/addprofilepicture").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/addprofilepicture").permitAll() // allowed by anyone// allowed by anyone
+                .antMatchers(HttpMethod.GET, "/getprofilepicture").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/getprofilepicture").permitAll() // allowed by anyone// allowed by anyone
                 .antMatchers("/profileimages/**").permitAll()
                 .anyRequest().denyAll()// anything else is denied
                 .and()

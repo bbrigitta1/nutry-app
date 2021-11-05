@@ -130,9 +130,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/getprofilepicture")
-    public String getPicture(@RequestBody Authentication authentication) throws IOException {
+    @PostMapping("/getprofilepicture")
+    public String getPicture(@RequestBody String example, Authentication authentication) throws IOException {
         User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        System.out.println(user.getProfileImageFilename());
         return user.getProfileImageFilename();
     }
 

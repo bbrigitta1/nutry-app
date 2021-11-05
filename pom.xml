@@ -58,7 +58,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
 
@@ -120,6 +119,7 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -130,6 +130,7 @@
                 <configuration>
                     <excludes>
                         <exclude>
+                            <addResources>true</addResources>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
