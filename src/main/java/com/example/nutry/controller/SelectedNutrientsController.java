@@ -39,12 +39,10 @@ public class SelectedNutrientsController {
 
     @PostMapping("/select-custom-nutrient")
     public void selectCustomNutrient(@RequestBody SelectedNutrientListDTO selectedNutrientList, Authentication authentication){
-        System.out.println(selectedNutrientList);
         User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
         if (selectedNutrientService.findNutrientSelectionByUser(user) != null){
             selectedNutrientService.deleteByUser(user);
         }
-        System.out.println("nutry");
         List<Nutrient> nutrientList = new ArrayList<>();
         for (SelectedNutrientDTO nutrient : selectedNutrientList.getSelectedNutrientList()){
             if (nutrientService.getByNutrientId2(nutrient.getNutrientID())!= null){
@@ -69,7 +67,6 @@ public class SelectedNutrientsController {
                 selectedNutrients.add(getMicroNutrient(selectedDate, nutrient.getNutrientId2()));
             }
         }
-        System.out.println(selectedNutrients);
         return selectedNutrients;
     }
 

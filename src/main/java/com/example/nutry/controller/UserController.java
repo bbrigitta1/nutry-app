@@ -78,7 +78,6 @@ public class UserController {
 
         user.setUserDetails(Lists.newArrayList(userDetails));
 
-        System.out.println(user);
         userService.save(user);
     };
 
@@ -99,7 +98,6 @@ public class UserController {
                 + userDetails.getGender()) * userDetails.getActivity() * userDetails.getGoal());
 
         userDetailsDTO.setRecommended(recommended);
-        System.out.println(userDetailsDTO);
         return userDetailsDTO;
 
         //TODO read from session
@@ -133,7 +131,6 @@ public class UserController {
     @PostMapping("/getprofilepicture")
     public String getPicture(@RequestBody String example, Authentication authentication) throws IOException {
         User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
-        System.out.println(user.getProfileImageFilename());
         return user.getProfileImageFilename();
     }
 
