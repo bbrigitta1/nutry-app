@@ -24,7 +24,7 @@ import java.util.function.LongToIntFunction;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${crossorigin}")
 public class AuthController {
 
     @Autowired

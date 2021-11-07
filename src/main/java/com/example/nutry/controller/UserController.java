@@ -18,7 +18,7 @@ import java.time.Period;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${crossorigin}")
 public class UserController {
 
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
