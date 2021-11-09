@@ -71,7 +71,6 @@ public class AddedFoodController {
     @PostMapping("/addfoodtomealplan")
     public void saveFood(@RequestBody FoodDTO food, Authentication authentication, HttpServletRequest request){
         System.out.println("authentication principal: " + authentication.getPrincipal());
-        //TODO get user ID from session
         User exampleUser = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
 
         FoodConsumed foodConsumed = FoodConsumed.builder()
