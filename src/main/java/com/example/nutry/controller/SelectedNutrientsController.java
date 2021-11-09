@@ -90,4 +90,18 @@ public class SelectedNutrientsController {
                 .build();
         return microNutrientDTO;
     }
+
+    @PostMapping("/getallnutrients")
+    private List <MicroNutrientDTO>  getAllNutrients() {
+        List <Nutrient> allNutrients = nutrientService.findAll();
+        List <MicroNutrientDTO> allNutrientsToSelect = new ArrayList<>();
+        for(Nutrient nutrient: allNutrients){
+            MicroNutrientDTO microNutrientDTO = MicroNutrientDTO.builder()
+                    .nutrientName(nutrient.getNutrientName())
+                    .nutrientID(nutrient.getNutrientId2())
+                    .build();
+            allNutrientsToSelect.add(microNutrientDTO);
+        }
+        return allNutrientsToSelect;
+    }
 }
