@@ -130,7 +130,6 @@
                 <configuration>
                     <excludes>
                         <exclude>
-                            <addResources>true</addResources>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
