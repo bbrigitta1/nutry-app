@@ -36,7 +36,7 @@ import java.util.Base64;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${crossorigin}")
 public class UserController {
 
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();

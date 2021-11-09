@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${crossorigin}")
 public class DashBoardController {
 
     //DTO -> MacroNutrents.class

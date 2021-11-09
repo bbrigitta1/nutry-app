@@ -8,10 +8,10 @@
         <version>2.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>codecool-advanced-nurtry-backend</artifactId>
+    <artifactId>nurtry-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>codecool-advanced-nutry-backend</name>
-    <description>codecool-advanced-nutry-backend</description>
+    <name>nutry-app</name>
+    <description>nutry-app</description>
     <properties>
         <java.version>11</java.version>
     </properties>
