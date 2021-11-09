@@ -53,7 +53,7 @@ public class UserController {
 
     private UUID uuid;
 
-    private static String imageDirectory = "./app/src/main/resources/static/profileimages";
+    private static String imageDirectory = "/app/src/main/resources/static/profileimages";
 
     @PostMapping("/addusertodatabase")
     public void saveUser(@RequestBody UserRegistrationDTO userDTO){
