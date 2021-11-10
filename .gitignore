@@ -33,7 +33,7 @@ build/
 .vscode/
 
 
-src/main/resources/static/profileimages
+#src/main/resources/static/profileimages
 
 .jpb/
 
