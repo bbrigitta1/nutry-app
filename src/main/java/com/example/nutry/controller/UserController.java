@@ -1,27 +1,29 @@
 package com.example.nutry.controller;
 
 
-import com.example.nutry.model.User;
-import com.example.nutry.model.UserDetails;
-import com.example.nutry.model.UserDetailsDTO;
-import com.example.nutry.model.UserRegistrationDTO;
+import com.example.nutry.model.*;
 import com.example.nutry.service.UserDetailsService;
 import com.example.nutry.service.UserService;
 import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.core.io.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.io.FilenameUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.tools.FileObject;
 import java.io.File;
 import java.io.FileInputStream;
@@ -82,10 +84,10 @@ public class UserController {
     };
 
     @GetMapping("/getuserdata")
-    public UserDetailsDTO getUserData(){
-
-        //TODO get userID from session
-        User user = userService.findById(1L);
+    public UserDetailsDTO getUserData(Authentication authentication){
+        User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+//        User user = userService.findById(1L);
+        System.out.println(user.getUserName());
 
         UserDetails userDetails = userDetailsService.findLatestByDateAndUser(LocalDate.now(),user);
 
@@ -101,10 +103,67 @@ public class UserController {
         return userDetailsDTO;
 
         //TODO read from session
-
-
-
     }
+
+    @GetMapping("/getuserprofiledetails")
+    public UserProfileDetailsDTO getUserProfileDetails(Authentication authentication) throws IOException {
+        User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        UserDetails userDetails = userDetailsService.findLatestByDateAndUser(LocalDate.now(),user);
+
+        UserProfileDetailsDTO userProfileDetailsDTO = new UserProfileDetailsDTO();
+
+        userProfileDetailsDTO.setUserName(user.getUserName());
+        userProfileDetailsDTO.setHeight(userDetails.getHeight());
+        userProfileDetailsDTO.setWeight(userDetails.getWeight());
+        String genderNum = String.valueOf(userDetails.getGender());
+        String activityNum = String.valueOf(userDetails.getActivity());
+        String goalNum = String.valueOf(userDetails.getGoal());
+
+        String gender;
+        String activity;
+        String goal;
+
+        switch (genderNum){
+            case "0":
+                gender = "Male";
+                break;
+            case "166":
+                gender = "Female";
+                break;
+            default:
+                gender = "Other";
+        }
+        userProfileDetailsDTO.setGender(gender);
+
+        switch (activityNum){
+            case "1.1":
+                activity = "Very Light";
+                break;
+            case "1.6":
+                activity = "Moderate";
+                break;
+            case "1.9":
+                activity = "Heavy";
+                break;
+            default:
+                activity = "Light";
+        }
+        userProfileDetailsDTO.setActivity(activity);
+
+        switch (goalNum){
+            case "1":
+                goal = "Maintenance";
+                break;
+            case "0.65":
+                goal = "Extreme Fat Loss";
+                break;
+            default:
+                goal = "Fat Loss";
+        }
+        userProfileDetailsDTO.setGoal(goal);
+
+        return userProfileDetailsDTO;
+    };
 
     @PostMapping("/addprofilepicture")
     public void uploadPicture(@RequestBody MultipartFile file, Authentication authentication) throws IOException {
