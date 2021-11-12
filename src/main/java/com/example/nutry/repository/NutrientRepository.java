@@ -13,6 +13,7 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     Nutrient findNutrientByNutrientId2(Long nutrientId2);
 
 
+
     @Override
     <S extends Nutrient> List<S> saveAll(Iterable<S> iterable);
 }
