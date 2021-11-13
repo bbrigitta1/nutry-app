@@ -115,6 +115,10 @@ public class UserController {
         userProfileDetailsDTO.setUserName(user.getUserName());
         userProfileDetailsDTO.setHeight(userDetails.getHeight());
         userProfileDetailsDTO.setWeight(userDetails.getWeight());
+        userProfileDetailsDTO.setGender(userDetails.getGender());
+        userProfileDetailsDTO.setGoal(userDetails.getGoal());
+        userProfileDetailsDTO.setActivity(userDetails.getActivity());
+        userProfileDetailsDTO.setBirthdate(userDetails.getBirthdate());
         String genderNum = String.valueOf(userDetails.getGender());
         String activityNum = String.valueOf(userDetails.getActivity());
         String goalNum = String.valueOf(userDetails.getGoal());
@@ -133,7 +137,7 @@ public class UserController {
             default:
                 gender = "Other";
         }
-        userProfileDetailsDTO.setGender(gender);
+        userProfileDetailsDTO.setGenderinit(gender);
 
         switch (activityNum){
             case "1.1":
@@ -148,7 +152,7 @@ public class UserController {
             default:
                 activity = "Light";
         }
-        userProfileDetailsDTO.setActivity(activity);
+        userProfileDetailsDTO.setActivityinit(activity);
 
         switch (goalNum){
             case "1":
@@ -160,10 +164,33 @@ public class UserController {
             default:
                 goal = "Fat Loss";
         }
-        userProfileDetailsDTO.setGoal(goal);
+        userProfileDetailsDTO.setGoalinit(goal);
+
+        System.out.println("getuserprofiledetails " + userProfileDetailsDTO);
 
         return userProfileDetailsDTO;
     };
+
+    @PostMapping("/updateuserprofiledetails")
+    public void updateProfileDetails(@RequestBody UserProfileDetailsDTO userProfileDetailsDTO, Authentication authentication){
+        User user = userService.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        System.out.println(userProfileDetailsDTO);
+
+        UserDetails userDetails = UserDetails.builder()
+                .weight(userProfileDetailsDTO.getWeight())
+                .activity(userProfileDetailsDTO.getActivity())
+                .birthdate(userProfileDetailsDTO.getBirthdate())
+                .age(Period.between(userProfileDetailsDTO.getBirthdate(), LocalDate.now()).getYears())
+                .gender(userProfileDetailsDTO.getGender())
+                .goal(userProfileDetailsDTO.getGoal())
+                .height(userProfileDetailsDTO.getHeight())
+                .date(LocalDate.now())
+                .user(user)
+                .build();
+
+        userDetailsService.save(userDetails);
+
+    }
 
     @PostMapping("/addprofilepicture")
     public void uploadPicture(@RequestBody MultipartFile file, Authentication authentication) throws IOException {

@@ -13,5 +13,5 @@ public interface UserDetailsRepository extends JpaRepository <UserDetails, Long>
 
     UserDetails findByDateAndUser(LocalDate localDate, User user);
     List<UserDetails> findAllByDateLessThanEqualAndUser(LocalDate localDate, User user);
-
+    List<UserDetails> findAllByUser(User user);
 }

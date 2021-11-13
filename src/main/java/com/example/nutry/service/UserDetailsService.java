@@ -18,17 +18,21 @@ public class UserDetailsService implements IUserDetailsService{
     UserDetailsRepository userDetailsRepository;
 
     @Override
+    public void save(UserDetails userDetails){userDetailsRepository.save(userDetails);
+    }
+
+    @Override
     public UserDetails findByDateAndUser(LocalDate date, User user){
         return userDetailsRepository.findByDateAndUser(date,user);
     }
 
     @Override
     public UserDetails findLatestByDateAndUser(LocalDate date, User user) {
+        date = date.plusDays(1);
         List<UserDetails> userDetailsList = userDetailsRepository.findAllByDateLessThanEqualAndUser(date, user);
-        //System.out.println(userDetailsList);
         if (userDetailsList.size() == 0) {
             return null;
         }
-        return userDetailsList.get(0);
+        return userDetailsList.get(userDetailsList.size()-1);
     }
 }
