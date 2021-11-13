@@ -155,14 +155,14 @@ public class UserController {
         userProfileDetailsDTO.setActivityinit(activity);
 
         switch (goalNum){
-            case "1":
-                goal = "Maintenance";
+            case "1.2":
+                goal = "Gain Muscle";
                 break;
-            case "0.65":
-                goal = "Extreme Fat Loss";
+            case "0.8":
+                goal = "Fat Loss";
                 break;
             default:
-                goal = "Fat Loss";
+                goal = "Maintenance";
         }
         userProfileDetailsDTO.setGoalinit(goal);
 
