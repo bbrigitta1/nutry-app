@@ -127,17 +127,19 @@ public class UserController {
         String activity;
         String goal;
 
+
         switch (genderNum){
-            case "0":
+            case "0.0":
                 gender = "Male";
                 break;
-            case "166":
+            case "166.0":
                 gender = "Female";
                 break;
             default:
                 gender = "Other";
         }
         userProfileDetailsDTO.setGenderinit(gender);
+        System.out.println("gender"+ genderNum +"  "+ gender);
 
         switch (activityNum){
             case "1.1":
