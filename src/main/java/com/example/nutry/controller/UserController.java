@@ -97,7 +97,7 @@ public class UserController {
         Integer recommended =  (int)((10 * userDetails.getWeight()
                 + 6.25 * userDetails.getHeight()
                 - 5 * userDetails.getAge()
-                + userDetails.getGender()) * userDetails.getActivity() * userDetails.getGoal());
+                - userDetails.getGender() + 5) * userDetails.getActivity() * userDetails.getGoal());
 
         userDetailsDTO.setRecommended(recommended);
         return userDetailsDTO;
