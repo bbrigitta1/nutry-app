@@ -1,7 +1,7 @@
 31–50-Female -Calcium, Ca-1000
 31–50-Female-Protein-46
 31–50-Female-Total lipid (fat)-ND
-31–50-Female-Carbohydrate, by difference-1300
+31–50-Female-Carbohydrate, by difference-130
 31–50-Female-Energy-ND
 31–50-Female-Alcohol-ND
 31–50-Female-Water-2.7

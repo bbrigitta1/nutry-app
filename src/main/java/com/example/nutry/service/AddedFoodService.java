@@ -24,6 +24,7 @@ public class AddedFoodService implements IAddedFoodService {
 
     @Override
     public void save(Food food) {
+        System.out.println(food.toString());
         addedFoodRepository.save(food);
     }
 

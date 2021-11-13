@@ -1,8 +1,10 @@
 package com.example.nutry.controller;
 
 import com.example.nutry.model.*;
+import com.example.nutry.repository.UserRepository;
 import com.example.nutry.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,6 +38,9 @@ public class DashBoardController {
 
     @Autowired
     private DriLifeStageService driLifeStageService;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
 //    @PostMapping("/get-recommended-nutrients")
@@ -154,7 +159,7 @@ public class DashBoardController {
 
 
     @PostMapping("/get-avg-macronutrients-for-period")
-    public MacroNutrientsDTO getAvgMacronutrientsForPeriod(@RequestBody PeriodDTO periodDTO) {
+    public MacroNutrientsDTO getAvgMacronutrientsForPeriod(@RequestBody PeriodDTO periodDTO, Authentication authentication) {
         User user = userService.findById(1L);
 
         LocalDate end = LocalDate.now().plusDays(1);
@@ -166,7 +171,9 @@ public class DashBoardController {
         Double sumOfProteins = 0.0;
         Double sumOfFat = 0.0;
         Double sumOfCarbohydrate = 0.0;
+
         Double nrOfDays = 0.0;
+
 
         for (LocalDate dat : dateList) {
             List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, dat);
@@ -187,12 +194,16 @@ public class DashBoardController {
                 }
             }
         }
+        Map<String, Double> recommendedMacros = calcRecommendedMacronutrients(authentication);
+
         MacroNutrientsDTO macroNutrientsDTO = MacroNutrientsDTO.builder()
                 .carbohydrate(sumOfCarbohydrate/nrOfDays)
+                .carbohydrateRecommended(recommendedMacros.get("carbohydrate"))
                 .fat(sumOfFat/nrOfDays)
+                .fatRecommended(recommendedMacros.get("fat"))
                 .protein(sumOfProteins/nrOfDays)
+                .proteinRecommended(recommendedMacros.get("protein"))
                 .build();
-        //System.out.println("Macro: " + macroNutrientsDTO);
         return macroNutrientsDTO;
     }
 
@@ -309,7 +320,48 @@ public class DashBoardController {
                 + userDetails.getGender()) * userDetails.getActivity() * userDetails.getGoal());
     }
 
+    public Map<String, Double> calcRecommendedMacronutrients(Authentication authentication) {
+
+        Map<String, Double> macroNutrientsRecommended = new HashMap<>();
+
+        Double proteinRecommended = 0.0;
+        Double fatRecommended = 0.0;
+        Double carbohydarteRecommended = 0.0;
+
+        User user = userRepository.findUserByEmail(String.valueOf(authentication.getPrincipal()));
+        Double goal = userDetailsService.findLatestByDateAndUser(LocalDate.now(),  user).getGoal();
+        System.out.println("goal: " + goal);
 
 
+        UserDetails userDetails = userDetailsService.findLatestByDateAndUser(LocalDate.now(),user);
+        Integer recommended =  (int)((10 * userDetails.getWeight()
+                + 6.25 * userDetails.getHeight()
+                - 5 * userDetails.getAge()
+                + userDetails.getGender()) * userDetails.getActivity() * userDetails.getGoal());
+
+        double weightInFont = userDetails.getWeight()*2.2046;
+
+        //muscle gain
+        if (goal == 1.2) {
+            proteinRecommended = 1.5 * weightInFont;
+            fatRecommended = 0.4 * weightInFont;
+            //carbohydarteRecommended = (recommended -(proteinRecommended * 4 + fatRecommended * 9)) / 4 ;
+            System.out.println("carbRecom: " + carbohydarteRecommended) ;
+        //maint
+        } else if (goal == 1.0) {
+            proteinRecommended = 1.0 * weightInFont;
+            fatRecommended = 0.5 * weightInFont;
+        //fat loss
+        } else if (goal == 0.8) {
+            proteinRecommended = 1.2 * weightInFont;
+            fatRecommended = 0.4 * weightInFont;
+        }
+        carbohydarteRecommended = (recommended -(proteinRecommended * 4 + fatRecommended * 9)) / 4 ;
+
+        macroNutrientsRecommended.put("fat", fatRecommended);
+        macroNutrientsRecommended.put("carbohydrate", carbohydarteRecommended);
+        macroNutrientsRecommended.put("protein", proteinRecommended);
+        return macroNutrientsRecommended;
+    }
 
 }
