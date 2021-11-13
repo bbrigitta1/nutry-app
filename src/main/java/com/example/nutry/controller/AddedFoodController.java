@@ -134,6 +134,7 @@ public class AddedFoodController {
 
     private MacroNutrientsDTO getMacroNutrients(SelectedDateDTO selectedDate) {
         HashMap<String, Integer> nutrients = new HashMap<>();
+        //TODO get from auth
         User user = userService.findById(1L);
         List<FoodConsumed> foodsConsumedByUser = foodConsumedService.findFoodConsumedsByUserAndConsumptionDate(user, selectedDate.getDate());
         Double sumOfProteins = 0.0;

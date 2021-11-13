@@ -77,6 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profileimages/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/getallnutrients").permitAll() // allowed by anyone
                 .antMatchers(HttpMethod.POST, "/getallnutrients").permitAll()
+                .antMatchers(HttpMethod.GET, "/addwater").permitAll() // allowed by anyone
+                .antMatchers(HttpMethod.POST, "/addwater").permitAll()
                 .anyRequest().permitAll()// anything else is denied
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices),

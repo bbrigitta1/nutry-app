@@ -67,7 +67,7 @@ public class NutrientConfig {
             Nutrient nutrient4 = Nutrient.builder()
                     .nutrientId2(1005L)
                     .nutrientName("Carbohydrate, by difference")
-                    .unitName("MG")
+                    .unitName("G")
                     .category("Carbohydrates")
                     .build();
 
